@@ -1,5 +1,12 @@
 package org.serratec.serratecpub.model;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+
 import org.serratec.serratecpub.util.TratamentoDeErro;
 
 import jakarta.persistence.Entity;
@@ -67,22 +74,30 @@ public class Endereco {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-	public void setRua(String rua) {
-		this.rua = rua;
-	}
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
-	public void setUf(String uf) {
-		this.uf = uf;
+
+	
+	public static String ViaCep(Endereco cep) {
+		
+		HttpClient client = HttpClient.newHttpClient();
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create("https://viacep.com.br/ws/" + cep.getCep() +"/json/"))
+				.build();
+		HttpResponse<String> response;
+		try {
+			response = client.send(request, BodyHandlers.ofString());
+			String body = response.body();
+			return body;
+		} 
+		catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+			System.out.println("CEP não é valido!");
+		}
+		return null;
 	}
 }

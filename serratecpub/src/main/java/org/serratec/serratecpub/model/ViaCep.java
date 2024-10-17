@@ -7,8 +7,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 
-import org.serratec.serratecpub.dto.EnderecoDto;
-
 public class ViaCep {
 	public static void testandoCep() {
 		Endereco endereco = new Endereco();
