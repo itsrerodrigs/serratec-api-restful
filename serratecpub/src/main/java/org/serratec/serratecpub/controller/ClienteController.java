@@ -1,6 +1,5 @@
 package org.serratec.serratecpub.controller;
 
-import java.lang.StackWalker.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +50,7 @@ public class ClienteController {
         if(!clienteServico.excluirCliente(id)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
         }
-        return ResponseEntity.ok("Cliente com id" +id+ " excluído com sucesso!");
+        return ResponseEntity.ok("Cliente com id" + id + " excluído com sucesso!");
     }
 
     @PutMapping("/{id}")
