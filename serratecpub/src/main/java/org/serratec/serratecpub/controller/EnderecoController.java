@@ -22,9 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/enderecos")
 public class EnderecoController {
     @Autowired
-
     private EnderecoService enderecoService;
 
+	
+	
     @GetMapping
     public List<EnderecoDto> listarEnderecos(){
         return enderecoService.obterTodosEnderecos();
@@ -41,7 +42,7 @@ public class EnderecoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EnderecoDto cadastraEndereco(@RequestBody EnderecoDto enderecoDto){
+    public EnderecoDto cadastraEndereco(@RequestBody EnderecoDto enderecoDto){	    	
         return enderecoService.salvarEndereco(enderecoDto);
     }
 
