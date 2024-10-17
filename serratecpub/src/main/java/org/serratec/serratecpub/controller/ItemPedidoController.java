@@ -45,11 +45,11 @@ public class ItemPedidoController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deletarItemPedido(@PathVariable Long id) {
+	public ResponseEntity<String> deletarItemPedido(@PathVariable Long id, ItemPedidoDto itemPedidoDto) {
 		if (!itemPedidoService.apagarItemPedido(id)) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item pedido não encontrado!");
 		}
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok("Item pedido " + id + " " + itemPedidoDto + " excluído com sucesso!");
 	}
 
 	@PutMapping("/{id}")
