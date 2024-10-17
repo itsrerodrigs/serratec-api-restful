@@ -7,6 +7,6 @@ CREATE TABLE cliente(
 	data_nascimento DATE,
 	id_endereco BIGINT,
 	
-	CONSTRAINT id_endereco FOREIGN KEY (id_endereco)
+	CONSTRAINT fk_endereco FOREIGN KEY (id_endereco)
 	REFERENCES endereco(id)
 )

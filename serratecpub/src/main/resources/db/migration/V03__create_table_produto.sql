@@ -8,6 +8,5 @@ CREATE TABLE produto(
 	imagem VARCHAR(500),
 	id_categoria BIGINT,
 	
-	CONSTRAINT id_categoria FOREIGN KEY(id_categoria)
-	REFERENCES categoria(id)
+	CONSTRAINT fk_categoria FOREIGN KEY (id_categoria) REFERENCES categoria(id)
 )

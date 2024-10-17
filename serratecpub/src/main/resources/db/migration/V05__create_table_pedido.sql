@@ -7,6 +7,6 @@ CREATE TABLE pedido(
 	valor_total DECIMAL,
 	id_cliente BIGINT,
 	
-	CONSTRAINT id_cliente FOREIGN KEY (id_cliente)
+	CONSTRAINT fk_cliente FOREIGN KEY (id_cliente)
 	REFERENCES cliente(id)
 )

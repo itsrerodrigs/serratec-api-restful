@@ -8,8 +8,8 @@ CREATE TABLE item_pedido(
 	id_pedido BIGINT,
 	id_produto BIGINT,
 	
-	CONSTRAINT id_pedido FOREIGN KEY(id_pedido)
+	CONSTRAINT fk_pedido FOREIGN KEY(id_pedido)
 	REFERENCES pedido(id),
-	CONSTRAINT id_produto FOREIGN KEY(id_produto)
+	CONSTRAINT fk_produto FOREIGN KEY(id_produto)
 	REFERENCES produto(id)
 )
