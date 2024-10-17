@@ -1,11 +1,15 @@
 package org.serratec.serratecpub.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Cliente {
@@ -17,8 +21,11 @@ public class Cliente {
 	private String cpf;
 	private String telefone;
 	private LocalDate dataNascimento;
-	
+	@OneToOne(cascade= CascadeType.ALL)
 	private Endereco endereco;
+	
+	@OneToMany(mappedBy="cliente")
+	private List<Pedido> pedidos;
 
 	
 	public Long getId() {

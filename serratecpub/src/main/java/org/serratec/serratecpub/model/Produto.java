@@ -1,11 +1,15 @@
 package org.serratec.serratecpub.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Produto {
@@ -18,9 +22,11 @@ public class Produto {
 	private LocalDate dataCadastro;
 	private Double valorUnitario;
 	private String imagem;
-	
+	@OneToOne(cascade= CascadeType.ALL)
 	private Categoria categoria;
-
+	
+	@ManyToMany
+	private List<ItemPedido> itensPedido;
 	
 	public Long getId() {
 		return id;

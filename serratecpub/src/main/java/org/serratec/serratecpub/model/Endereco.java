@@ -28,8 +28,7 @@ public class Endereco {
 	private String cidade;
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 3, max = 10, message = TratamentoDeErro.SizeMessage)
-	private String numero;
-	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	private String numero;	
 	@Size(max = 50, message = TratamentoDeErro.SizeMessage)
 	private String complemento;
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
