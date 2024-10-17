@@ -41,7 +41,7 @@ public class Produto {
 	private Categoria categoria;
 	
 	@ManyToMany
-	private List<ItemPedido> itensPedido;
+	private List<ItemPedido> itensPedidos;
 	
 	public Long getId() {
 		return id;

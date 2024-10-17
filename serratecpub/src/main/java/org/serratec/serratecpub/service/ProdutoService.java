@@ -12,36 +12,36 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProdutoService {
 	@Autowired
-	private ProdutoRepository repositorio;
+	private ProdutoRepository produtoRepository;
 	
-	public List<ProdutoDto> obterTodos(){
-		return repositorio.findAll().stream().map(p -> ProdutoDto.toDto(p)).toList();
+	public List<ProdutoDto> obterTodosProdutos(){
+		return produtoRepository.findAll().stream().map(p -> ProdutoDto.toDto(p)).toList();
 	}
 	
-	public Optional<ProdutoDto> obterPorId(Long id){
-		if(!repositorio.existsById(id)) {
+	public Optional<ProdutoDto> obterProdutosPorId(Long id){
+		if(!produtoRepository.existsById(id)) {
 			return Optional.empty();	
 			}
-		return Optional.of(ProdutoDto.toDto(repositorio.findById(id).get()));
+		return Optional.of(ProdutoDto.toDto(produtoRepository.findById(id).get()));
 	}
-	public ProdutoDto salvarProduto(ProdutoDto dto) {
-		Produto produtoEntity = repositorio.save(dto.toEntity());
+	public ProdutoDto salvarProduto(ProdutoDto produtoDto) {
+		Produto produtoEntity = produtoRepository.save(produtoDto.toEntity());
 		return ProdutoDto.toDto(produtoEntity);
 	}
 	public boolean apagarProduto(Long id) {
-		if(!repositorio.existsById(id)) {
+		if(!produtoRepository.existsById(id)) {
 			return false;
 		}
-		repositorio.deleteById(id);
+		produtoRepository.deleteById(id);
 		return true;
 	}
-	public Optional<ProdutoDto> alterarProduto(Long id, ProdutoDto dto){
-		if(!repositorio.existsById(id)) {
+	public Optional<ProdutoDto> alterarProduto(Long id, ProdutoDto produtoDto){
+		if(!produtoRepository.existsById(id)) {
 			return Optional.empty();
 		}
-		Produto produtoEntity = dto.toEntity();
+		Produto produtoEntity = produtoDto.toEntity();
 		produtoEntity.setId(id);
-		repositorio.save(produtoEntity);
+		produtoRepository.save(produtoEntity);
 		return Optional.of(ProdutoDto.toDto(produtoEntity));
 	}
 }

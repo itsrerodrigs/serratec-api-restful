@@ -19,39 +19,39 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ProdutoController {
 
 	@Autowired
-	private ProdutoService servico;
+	private ProdutoService produtoService;
 	
 	@GetMapping
-	public List<ProdutoDto> obterTodos() {
-		return servico.obterTodos();
+	public List<ProdutoDto> obterTodosProdutos() {
+		return produtoService.obterTodosProdutos();
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ProdutoDto> obterPorId(@PathVariable Long id) {
-		Optional<ProdutoDto> dto = servico.obterPorId(id);
-		if (!dto.isPresent()) {
+	public ResponseEntity<ProdutoDto> obterProdutoPorId(@PathVariable Long id) {
+		Optional<ProdutoDto> produtoDto = produtoService.obterProdutosPorId(id);
+		if (!produtoDto.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(dto.get());
+		return ResponseEntity.ok(produtoDto.get());
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ProdutoDto cadastrarProduto(@RequestBody ProdutoDto dto) {
-		return servico.salvarProduto(dto);
+	public ProdutoDto cadastrarProduto(@RequestBody ProdutoDto produtoDto) {
+		return produtoService.salvarProduto(produtoDto);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deletaProduto(@PathVariable Long id) {
-		if (!servico.apagarProduto(id)) {
+	public ResponseEntity<Void> deletarProduto(@PathVariable Long id) {
+		if (!produtoService.apagarProduto(id)) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ProdutoDto> alterarProduto(@PathVariable Long id, @RequestBody ProdutoDto dto) {
-		Optional<ProdutoDto> produtoAlterado = servico.alterarProduto(id, dto);
+	public ResponseEntity<ProdutoDto> alterarProduto(@PathVariable Long id, @RequestBody ProdutoDto produtoDto) {
+		Optional<ProdutoDto> produtoAlterado = produtoService.alterarProduto(id, produtoDto);
 		if (!produtoAlterado.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}

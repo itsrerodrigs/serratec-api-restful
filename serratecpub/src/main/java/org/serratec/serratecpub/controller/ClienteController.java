@@ -23,16 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClienteController {
     @Autowired
 
-    private ClienteService clienteServico;
+    private ClienteService clienteService;
 
     @GetMapping
     public List<ClienteDto> listarClientes(){
-        return clienteServico.obterTodosClientes();
+        return clienteService.obterTodosClientes();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ClienteDto> listarClientePorId(@PathVariable Long id){
-        Optional<ClienteDto> dto = clienteServico.obterClientePorId(id);
+        Optional<ClienteDto> dto = clienteService.obterClientePorId(id);
         if(dto.isPresent()){
             return ResponseEntity.notFound().build();
         }
@@ -42,12 +42,12 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ClienteDto cadastrarCliente(@RequestBody ClienteDto clienteDto){
-        return clienteServico.salvarCliente(clienteDto);
+        return clienteService.salvarCliente(clienteDto);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> excluirCliente(@PathVariable Long id){
-        if(!clienteServico.excluirCliente(id)){
+        if(!clienteService.excluirCliente(id)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
         }
         return ResponseEntity.ok("Cliente com id" + id + " excluído com sucesso!");
@@ -56,7 +56,7 @@ public class ClienteController {
     @PutMapping("/{id}")
     public ResponseEntity<ClienteDto> alterarCliente(@PathVariable Long id,
     @RequestBody ClienteDto clienteDto){
-        Optional<ClienteDto> clienteAlterado = clienteServico.alterarCliente(id, clienteDto);
+        Optional<ClienteDto> clienteAlterado = clienteService.alterarCliente(id, clienteDto);
         if (!clienteAlterado.isPresent()){
             return ResponseEntity.notFound().build();
         }

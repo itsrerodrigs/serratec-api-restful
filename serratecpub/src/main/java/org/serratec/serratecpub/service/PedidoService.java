@@ -13,36 +13,36 @@ import org.springframework.stereotype.Service;
 @Service 
 public class PedidoService {
 	@Autowired
-	private PedidoRepository repositorio;
+	private PedidoRepository pedidoRepositoriy;
 	
-	public List<PedidoDto> obterTodos(){
-		return repositorio.findAll().stream().map(p -> PedidoDto.toDto(p)).toList();
+	public List<PedidoDto> obterTodosPedidos(){
+		return pedidoRepositoriy.findAll().stream().map(p -> PedidoDto.toDto(p)).toList();
 	}
 	
-	public Optional<PedidoDto> obterPorId(Long id){
-		if(!repositorio.existsById(id)) {
+	public Optional<PedidoDto> obterPedidosPorId(Long id){
+		if(!pedidoRepositoriy.existsById(id)) {
 			return Optional.empty();	
 			}
-		return Optional.of(PedidoDto.toDto(repositorio.findById(id).get()));
+		return Optional.of(PedidoDto.toDto(pedidoRepositoriy.findById(id).get()));
 	}
-	public PedidoDto salvarPedido(PedidoDto dto) {
-		Pedido pedidoEntity = repositorio.save(dto.toEntity());
+	public PedidoDto salvarPedido(PedidoDto pedidoDto) {
+		Pedido pedidoEntity = pedidoRepositoriy.save(pedidoDto.toEntity());
 		return PedidoDto.toDto(pedidoEntity);
 	}
 	public boolean apagarPedido(Long id) {
-		if(!repositorio.existsById(id)) {
+		if(!pedidoRepositoriy.existsById(id)) {
 			return false;
 		}
-		repositorio.deleteById(id);
+		pedidoRepositoriy.deleteById(id);
 		return true;
 	}
-	public Optional<PedidoDto> alterarPedido(Long id, PedidoDto dto){
-		if(!repositorio.existsById(id)) {
+	public Optional<PedidoDto> alterarPedido(Long id, PedidoDto pedidoDto){
+		if(!pedidoRepositoriy.existsById(id)) {
 			return Optional.empty();
 		}
-		Pedido pedidoEntity = dto.toEntity();
+		Pedido pedidoEntity = pedidoDto.toEntity();
 		pedidoEntity.setId(id);
-		repositorio.save(pedidoEntity);
+		pedidoRepositoriy.save(pedidoEntity);
 		return Optional.of(PedidoDto.toDto(pedidoEntity));
 	}
 }

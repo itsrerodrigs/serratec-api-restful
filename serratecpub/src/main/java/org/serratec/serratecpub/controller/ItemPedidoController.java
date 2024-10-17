@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.serratec.serratecpub.dto.ItemPedidoDto;
-import org.serratec.serratecpub.service.PedidoItemService;
+import org.serratec.serratecpub.service.ItemPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,42 +19,42 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/itempedido")
-public class PedidoItemController {
+@RequestMapping("/itenspedidos")
+public class ItemPedidoController {
 	@Autowired
-	private PedidoItemService servico;
+	private ItemPedidoService itemPedidoService;
 	
 	@GetMapping
-	public List<ItemPedidoDto> obterTodos() {
-		return servico.obterTodos();
+	public List<ItemPedidoDto> obterTodosItensPedidos() {
+		return itemPedidoService.obterTodosItensPedidos();
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ItemPedidoDto> obterPorId(@PathVariable Long id) {
-		Optional<ItemPedidoDto> dto = servico.obterPorId(id);
-		if (!dto.isPresent()) {
+	public ResponseEntity<ItemPedidoDto> obterItensPedidosPorId(@PathVariable Long id) {
+		Optional<ItemPedidoDto> itemPedidoDto = itemPedidoService.obterItensPedidosPorId(id);
+		if (!itemPedidoDto.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(dto.get());
+		return ResponseEntity.ok(itemPedidoDto.get());
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ItemPedidoDto cadastrarPedido(@RequestBody ItemPedidoDto dto) {
-		return servico.salvarItemPedido(dto);
+	public ItemPedidoDto cadastrarItemPedido(@RequestBody ItemPedidoDto dto) {
+		return itemPedidoService.salvarItemPedido(dto);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deletaPedido(@PathVariable Long id) {
-		if (!servico.apagarItemPedido(id)) {
+	public ResponseEntity<Void> deletarItemPedido(@PathVariable Long id) {
+		if (!itemPedidoService.apagarItemPedido(id)) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ItemPedidoDto> alterarPedido(@PathVariable Long id, @RequestBody ItemPedidoDto dto) {
-		Optional<ItemPedidoDto> itemPedidoAlterado = servico.alterarItemPedido(id, dto);
+	public ResponseEntity<ItemPedidoDto> alterarItemPedido(@PathVariable Long id, @RequestBody ItemPedidoDto itemPedidoDto) {
+		Optional<ItemPedidoDto> itemPedidoAlterado = itemPedidoService.alterarItemPedido(id, itemPedidoDto);
 		if (!itemPedidoAlterado.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}

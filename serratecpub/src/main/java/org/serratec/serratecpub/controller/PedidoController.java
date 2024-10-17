@@ -22,39 +22,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/pedidos")
 public class PedidoController {
 	@Autowired
-	private PedidoService servico;
+	private PedidoService pedidoService;
 	
 	@GetMapping
-	public List<PedidoDto> obterTodos() {
-		return servico.obterTodos();
+	public List<PedidoDto> obterTodosPedidos() {
+		return pedidoService.obterTodosPedidos();
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<PedidoDto> obterPorId(@PathVariable Long id) {
-		Optional<PedidoDto> dto = servico.obterPorId(id);
-		if (!dto.isPresent()) {
+	public ResponseEntity<PedidoDto> obterPedidosPorId(@PathVariable Long id) {
+		Optional<PedidoDto> pedidoDto = pedidoService.obterPedidosPorId(id);
+		if (!pedidoDto.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(dto.get());
+		return ResponseEntity.ok(pedidoDto.get());
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public PedidoDto cadastrarPedido(@RequestBody PedidoDto dto) {
-		return servico.salvarPedido(dto);
+	public PedidoDto cadastrarPedido(@RequestBody PedidoDto pedidoDto) {
+		return pedidoService.salvarPedido(pedidoDto);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deletaPedido(@PathVariable Long id) {
-		if (!servico.apagarPedido(id)) {
+	public ResponseEntity<Void> deletarPedido(@PathVariable Long id) {
+		if (!pedidoService.apagarPedido(id)) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<PedidoDto> alterarPedido(@PathVariable Long id, @RequestBody PedidoDto dto) {
-		Optional<PedidoDto> pedidoAlterado = servico.alterarPedido(id, dto);
+	public ResponseEntity<PedidoDto> alterarPedido(@PathVariable Long id, @RequestBody PedidoDto pedidoDto) {
+		Optional<PedidoDto> pedidoAlterado = pedidoService.alterarPedido(id, pedidoDto);
 		if (!pedidoAlterado.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}

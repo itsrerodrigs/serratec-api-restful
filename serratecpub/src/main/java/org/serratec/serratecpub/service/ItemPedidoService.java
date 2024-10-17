@@ -10,20 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service 
-public class PedidoItemService {
+public class ItemPedidoService {
 
 		@Autowired
-		private ItemPedidoRepository repositorio;
+		private ItemPedidoRepository itemPedidoRepository;
 		
-		public List<ItemPedidoDto> obterTodos(){
-			return repositorio.findAll().stream().map(p -> ItemPedidoDto.toDto(p)).toList();
+		public List<ItemPedidoDto> obterTodosItensPedidos(){
+			return itemPedidoRepository.findAll().stream().map(p -> ItemPedidoDto.toDto(p)).toList();
 		}
 		
-		public Optional<ItemPedidoDto> obterPorId(Long id){
-			if(!repositorio.existsById(id)) {
+		public Optional<ItemPedidoDto> obterItensPedidosPorId(Long id){
+			if(!itemPedidoRepository.existsById(id)) {
 				return Optional.empty();	
 				}
-			return Optional.of(ItemPedidoDto.toDto(repositorio.findById(id).get()));
+			return Optional.of(ItemPedidoDto.toDto(itemPedidoRepository.findById(id).get()));
 		}
 		
 		public ItemPedidoDto salvarItemPedido(ItemPedidoDto dto) {
@@ -31,24 +31,24 @@ public class PedidoItemService {
 	        itemPedidoEntity.setValorBruto(dto.calcularValorBruto());
 	        itemPedidoEntity.setValorDesconto(dto.calcularValorDesconto());
 	        itemPedidoEntity.setValorLiquido(dto.calcularValorLiquido());
-	        ItemPedido itemPedidoSalvo = repositorio.save(itemPedidoEntity);
+	        ItemPedido itemPedidoSalvo = itemPedidoRepository.save(itemPedidoEntity);
 	        return ItemPedidoDto.toDto(itemPedidoSalvo);
 	    }
 		
 		public boolean apagarItemPedido(Long id) {
-			if(!repositorio.existsById(id)) {
+			if(!itemPedidoRepository.existsById(id)) {
 				return false;
 			}
-			repositorio.deleteById(id);
+			itemPedidoRepository.deleteById(id);
 			return true;
 		}
-		public Optional<ItemPedidoDto> alterarItemPedido(Long id, ItemPedidoDto dto){
-			if(!repositorio.existsById(id)) {
+		public Optional<ItemPedidoDto> alterarItemPedido(Long id, ItemPedidoDto itemPedidoDto){
+			if(!itemPedidoRepository.existsById(id)) {
 				return Optional.empty();
 			}
-			ItemPedido itemPedidoEntity = dto.toEntity();
+			ItemPedido itemPedidoEntity = itemPedidoDto.toEntity();
 			itemPedidoEntity.setId(id);
-			repositorio.save(itemPedidoEntity);
+			itemPedidoRepository.save(itemPedidoEntity);
 			return Optional.of(ItemPedidoDto.toDto(itemPedidoEntity));
 		}
 }
