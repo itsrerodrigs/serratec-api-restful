@@ -3,6 +3,8 @@ package org.serratec.serratecpub.model;
 import org.serratec.serratecpub.util.TratamentoDeErro;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,7 +18,8 @@ public class Categoria {
 	private Long id;
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
-	private String nome;
+	@Enumerated(EnumType.STRING)
+	private CategoriaNome categoriaNome;
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(max = 150, message = TratamentoDeErro.SizeMessage)
 	private String descricao;
@@ -25,8 +28,8 @@ public class Categoria {
 	public Long getId() {
 		return id;
 	}
-	public String getNome() {
-		return nome;
+	public CategoriaNome getCategoriaNome() {
+		return categoriaNome;
 	}
 	public String getDescricao() {
 		return descricao;
@@ -34,8 +37,8 @@ public class Categoria {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setCategoriaNome(CategoriaNome categoriaNome) {
+		this.categoriaNome = categoriaNome;
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
