@@ -1,6 +1,6 @@
 package org.serratec.serratecpub.model;
 
-public enum Status {
+public enum StatusPedido {
 	ENVIADO,
 	A_CAMINHO,
 	SAIU_DA_TRANSPORTADORA,

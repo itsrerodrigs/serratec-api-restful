@@ -11,7 +11,7 @@ public class Pedido {
 	private LocalDate dataPedido;
 	private LocalDate dataEntrega;
 	private LocalDate dataEnvio;
-	private Status status;
+	private StatusPedido statusPedido;
 	private Double valorTotal;
 	
 	private Cliente cliente;
@@ -33,8 +33,8 @@ public class Pedido {
 		return dataEnvio;
 	}
 
-	public Status getStatus() {
-		return status;
+	public StatusPedido getStatusPedido() {
+		return statusPedido;
 	}
 
 	public Double getValorTotal() {
@@ -61,8 +61,8 @@ public class Pedido {
 		this.dataEnvio = dataEnvio;
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setStatusPedido(StatusPedido statusPedido) {
+		this.statusPedido = statusPedido;
 	}
 
 	public void setValorTotal(Double valorTotal) {

@@ -1,5 +1,5 @@
 package org.serratec.serratecpub.repository;
 
-public class PubRepository {
+public interface PedidoRepository {
 
 }
