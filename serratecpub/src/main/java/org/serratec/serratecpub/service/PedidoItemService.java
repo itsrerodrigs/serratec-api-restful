@@ -25,10 +25,16 @@ public class PedidoItemService {
 				}
 			return Optional.of(ItemPedidoDto.toDto(repositorio.findById(id).get()));
 		}
+		
 		public ItemPedidoDto salvarItemPedido(ItemPedidoDto dto) {
-			ItemPedido itemPedidoEntity = repositorio.save(dto.toEntity());
-			return ItemPedidoDto.toDto(itemPedidoEntity);
-		}
+	        ItemPedido itemPedidoEntity = dto.toEntity();
+	        itemPedidoEntity.setValorBruto(dto.calcularValorBruto());
+	        itemPedidoEntity.setValorDesconto(dto.calcularValorDesconto());
+	        itemPedidoEntity.setValorLiquido(dto.calcularValorLiquido());
+	        ItemPedido itemPedidoSalvo = repositorio.save(itemPedidoEntity);
+	        return ItemPedidoDto.toDto(itemPedidoSalvo);
+	    }
+		
 		public boolean apagarItemPedido(Long id) {
 			if(!repositorio.existsById(id)) {
 				return false;

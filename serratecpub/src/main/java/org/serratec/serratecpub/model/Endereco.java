@@ -9,6 +9,8 @@ import java.net.http.HttpResponse.BodyHandlers;
 
 import org.serratec.serratecpub.util.TratamentoDeErro;
 
+import com.google.gson.Gson;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,28 +23,40 @@ public class Endereco {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	//@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 3, max = 15, message = TratamentoDeErro.SizeMessage)
 	private String cep;
-	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	//@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
 	private String rua;
-	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	//@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
 	private String bairro;
-	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	//@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
 	private String cidade;
-	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	//@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 3, max = 10, message = TratamentoDeErro.SizeMessage)
 	private String numero;	
 	@Size(max = 50, message = TratamentoDeErro.SizeMessage)
 	private String complemento;
-	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	//@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 2, max = 2,message = TratamentoDeErro.SizeMessage)
 	private String uf;
 	
 	
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -82,22 +96,25 @@ public class Endereco {
 	}
 
 	
-	public static String ViaCep(Endereco cep) {
-		
-		HttpClient client = HttpClient.newHttpClient();
-		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create("https://viacep.com.br/ws/" + cep.getCep() +"/json/"))
-				.build();
-		HttpResponse<String> response;
-		try {
-			response = client.send(request, BodyHandlers.ofString());
-			String body = response.body();
-			return body;
-		} 
-		catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-			System.out.println("CEP não é valido!");
-		}
-		return null;
-	}
+//	public static String ViaCep(String cep) {
+//		
+//		HttpClient client = HttpClient.newHttpClient();
+//		HttpRequest request = HttpRequest.newBuilder()
+//				.uri(URI.create("https://viacep.com.br/ws/" + cep +"/json/"))
+//				.build();
+//		HttpResponse<String> response;
+//		try {
+//			Endereco endereco = new Endereco();
+//			response = client.send(request, BodyHandlers.ofString());
+//			String body = response.body();
+//			Gson gson = new Gson();
+//			
+//			return ;
+//		} 
+//		catch (IOException | InterruptedException e) {
+//			e.printStackTrace();
+//			System.out.println("CEP não é valido!");
+//		}
+//		return null;
+//	}
 }
