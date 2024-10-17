@@ -3,7 +3,11 @@ package org.serratec.serratecpub.model;
 import java.time.LocalDate;
 import java.util.List;
 
+
 import jakarta.persistence.CascadeType;
+
+import org.serratec.serratecpub.util.TratamentoDeErro;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,16 +15,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+
 @Entity
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	@Size(min = 5, max = 100)
 	private String email;
 	private String nomeCompleto;
 	private String cpf;
 	private String telefone;
 	private LocalDate dataNascimento;
+	
 	@OneToOne(cascade= CascadeType.ALL)
 	private Endereco endereco;
 	

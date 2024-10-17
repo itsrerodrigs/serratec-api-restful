@@ -3,6 +3,8 @@ package org.serratec.serratecpub.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.serratec.serratecpub.util.TratamentoDeErro;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,18 +12,31 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
 
 @Entity
 public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
 	private String nome;
+	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	@Size(max = 100, message = TratamentoDeErro.SizeMessage)
 	private String descricao;
+	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	private int qntEstoque;
-	private LocalDate dataCadastro;
+	private LocalDate dataCadastro = LocalDate.now();//data de cadastro vai automaticamente
+	@Positive
 	private Double valorUnitario;
+	@Size(min = 1, max = 500, message = TratamentoDeErro.SizeMessage)
 	private String imagem;
+	
+	
 	@OneToOne(cascade= CascadeType.ALL)
 	private Categoria categoria;
 	
