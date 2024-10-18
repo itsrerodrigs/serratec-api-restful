@@ -30,6 +30,14 @@ public class Categoria {
 	@OneToMany(mappedBy = "categoria")
 	private List<Produto> produtos;
 	
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+	public void setProdutos(List<Produto> produtos) {
+		produtos.forEach(p -> p.setCategoria(this));
+		this.produtos = produtos;
+	}
+	
 	public Long getId() {
 		return id;
 	}

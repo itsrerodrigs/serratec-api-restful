@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
@@ -28,7 +27,7 @@ public class Produto {
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(max = 100, message = TratamentoDeErro.SizeMessage)
 	private String descricao;
-	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	@Positive
 	private int qntEstoque;
 	private LocalDate dataCadastro = LocalDate.now();//data de cadastro vai automaticamente
 	@Positive
@@ -38,12 +37,21 @@ public class Produto {
 	
 	
 	@ManyToOne
-	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
 
 	@OneToMany(mappedBy = "produto")
-	private List<ItemPedido> itensPedidos;
+	private List<ItemPedido> ItemPedido;
 	
+	public List<ItemPedido> getItemPedido() {
+		ItemPedido.forEach(p -> p.setProduto(this));
+		return ItemPedido;
+	}
+
+	public void setItemPedido(List<ItemPedido> itemPedido) {
+		ItemPedido = itemPedido;
+	}
+	
+
 	public Long getId() {
 		return id;
 	}

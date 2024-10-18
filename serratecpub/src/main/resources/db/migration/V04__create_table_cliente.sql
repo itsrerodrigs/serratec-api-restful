@@ -5,8 +5,8 @@ CREATE TABLE cliente(
 	cpf VARCHAR(14) UNIQUE,
 	telefone VARCHAR(15) UNIQUE,
 	data_nascimento DATE,
-	id_endereco BIGINT,
+	endereco_id BIGINT,
 	
-	CONSTRAINT fk_endereco FOREIGN KEY (id_endereco)
+	CONSTRAINT fk_endereco FOREIGN KEY (endereco_id)
 	REFERENCES endereco(id)
 )

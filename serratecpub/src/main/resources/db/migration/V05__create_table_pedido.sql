@@ -5,8 +5,8 @@ CREATE TABLE pedido(
 	data_envio DATE,
 	status VARCHAR(15),
 	valor_total DECIMAL,
-	id_cliente BIGINT,
+	cliente_id BIGINT,
 	
-	CONSTRAINT fk_cliente FOREIGN KEY (id_cliente)
+	CONSTRAINT fk_cliente FOREIGN KEY (cliente_id)
 	REFERENCES cliente(id)
 )

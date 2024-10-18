@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -22,20 +21,25 @@ public class ItemPedido {
 	private Double valorDesconto;
 	
 	@ManyToOne
-	@JoinColumn(name="id_pedido")
 	private Pedido pedido;
-
+	
+	public Pedido getPedido() {
+		return pedido;
+	}
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+	
 	@ManyToOne
-	@JoinColumn(name="id_produto")
 	private Produto produto;
 	
-	public Double getValorDesconto() {
-		return valorDesconto;
+	public Produto getProduto() {
+		return produto;
+	}
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
-	public void setValorDesconto(Double valorDesconto) {
-		this.valorDesconto = valorDesconto;
-	}
 	
 	public Long getId() {
 		return id;
@@ -61,12 +65,8 @@ public class ItemPedido {
 		return valorLiquido;
 	}
 
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-	public Produto getProduto() {
-		return produto;
+	public Double getValorDesconto() {
+		return valorDesconto;
 	}
 
 	public void setId(Long id) {
@@ -93,11 +93,7 @@ public class ItemPedido {
 		this.valorLiquido = valorLiquido;
 	}
 
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}
-
-	public void setProduto(Produto produto) {
-		this.produto = produto;
+	public void setValorDesconto(Double valorDesconto) {
+		this.valorDesconto = valorDesconto;
 	}
 }

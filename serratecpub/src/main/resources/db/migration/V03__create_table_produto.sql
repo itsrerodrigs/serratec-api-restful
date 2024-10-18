@@ -6,7 +6,7 @@ CREATE TABLE produto(
 	data_cadastro DATE,
 	valor_unitario DECIMAL,
 	imagem VARCHAR(500),
-	id_categoria BIGINT,
+	categoria_id BIGINT,
 	
-	CONSTRAINT fk_categoria FOREIGN KEY (id_categoria) REFERENCES categoria(id)
+	CONSTRAINT fk_categoria FOREIGN KEY (categoria_id) REFERENCES categoria(id)
 )

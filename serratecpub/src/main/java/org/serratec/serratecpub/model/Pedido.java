@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -23,13 +22,20 @@ public class Pedido {
 	private Double valorTotal;
 	
 	@ManyToOne
-    @JoinColumn(name = "id_cliente")
-	private Cliente cliente;
+	private Cliente cliente;//deixar somente assim
 	
 	@OneToMany(mappedBy = "pedido")
-	private List<ItemPedido> itensPedido;
+	private List<ItemPedido> itemPedido;
 
+	public List<ItemPedido> getItemPedido() {
+		return itemPedido;
+	}
+	public void setItensPedido(List<ItemPedido> ItemPedido) {
+		ItemPedido.forEach(p -> p.setPedido(this));
+		this.itemPedido = ItemPedido;
+	}
 	
+
 	public Long getId() {
 		return id;
 	}
