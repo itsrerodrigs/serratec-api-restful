@@ -1,5 +1,7 @@
 package org.serratec.serratecpub.model;
 
+import java.util.List;
+
 import org.serratec.serratecpub.util.TratamentoDeErro;
 
 import jakarta.persistence.Entity;
@@ -8,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -24,6 +27,8 @@ public class Categoria {
 	@Size(max = 150, message = TratamentoDeErro.SizeMessage)
 	private String descricao;
 	
+	@OneToMany(mappedBy = "categoria")
+	private List<Produto> produtos;
 	
 	public Long getId() {
 		return id;

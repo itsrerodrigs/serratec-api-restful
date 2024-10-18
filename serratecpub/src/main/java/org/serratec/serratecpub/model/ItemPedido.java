@@ -24,6 +24,10 @@ public class ItemPedido {
 	@ManyToOne
 	@JoinColumn(name="id_pedido")
 	private Pedido pedido;
+
+	@ManyToOne
+	@JoinColumn(name="id_produto")
+	private Produto produto;
 	
 	public Double getValorDesconto() {
 		return valorDesconto;
@@ -32,11 +36,6 @@ public class ItemPedido {
 	public void setValorDesconto(Double valorDesconto) {
 		this.valorDesconto = valorDesconto;
 	}
-
-	@ManyToOne
-	@JoinColumn(name="id_produto")
-	private Produto produto;
-
 	
 	public Long getId() {
 		return id;

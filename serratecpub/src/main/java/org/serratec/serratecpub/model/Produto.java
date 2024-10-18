@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.serratec.serratecpub.util.TratamentoDeErro;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -37,10 +37,11 @@ public class Produto {
 	private String imagem;
 	
 	
-	@OneToOne(cascade= CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
-	
-	@ManyToMany
+
+	@OneToMany(mappedBy = "produto")
 	private List<ItemPedido> itensPedidos;
 	
 	public Long getId() {
