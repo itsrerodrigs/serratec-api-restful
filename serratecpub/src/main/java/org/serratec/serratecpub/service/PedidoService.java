@@ -3,9 +3,7 @@ package org.serratec.serratecpub.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.serratec.serratecpub.dto.ClienteDto;
 import org.serratec.serratecpub.dto.PedidoDto;
-import org.serratec.serratecpub.model.Cliente;
 import org.serratec.serratecpub.model.Endereco;
 import org.serratec.serratecpub.model.Pedido;
 import org.serratec.serratecpub.model.ViaCepService;
@@ -33,6 +31,10 @@ public class PedidoService {
 			}
 		return Optional.of(PedidoDto.toDto(pedidoRepositoriy.findById(id).get()));
 	}
+	public List<PedidoDto> obterPedidosPorNomeCliente(String nome) {
+		return pedidoRepositoriy.BuscarPedidoPorNomeCliente(nome).stream().map(PedidoDto::toDto).toList();
+	}
+	
 //	public PedidoDto salvarPedido(PedidoDto pedidoDto) {
 //		Pedido pedidoEntity = pedidoRepositoriy.save(pedidoDto.toEntity());
 //		return PedidoDto.toDto(pedidoEntity);

@@ -37,6 +37,10 @@ public class PedidoController {
 		}
 		return ResponseEntity.ok(pedidoDto.get());
 	}
+	@GetMapping("/cliente/{nome}")
+	public List<PedidoDto> obterPedidosPorNomeCliente(@PathVariable String nome) {
+		return pedidoService.obterPedidosPorNomeCliente(nome);
+	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
