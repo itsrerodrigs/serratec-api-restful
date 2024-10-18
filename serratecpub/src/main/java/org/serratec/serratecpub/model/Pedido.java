@@ -3,6 +3,7 @@ package org.serratec.serratecpub.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +22,7 @@ public class Pedido {
 	private StatusPedido statusPedido;
 	private Double valorTotal;
 	
-	@ManyToOne
+	@ManyToOne(cascade= CascadeType.ALL)
 	private Cliente cliente;//deixar somente assim
 	
 	@OneToMany(mappedBy = "pedido")

@@ -1,5 +1,6 @@
 package org.serratec.serratecpub.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,8 +21,11 @@ public class ItemPedido {
 	private Double valorLiquido;
 	private Double valorDesconto;
 	
-	@ManyToOne
+	@ManyToOne(cascade= CascadeType.ALL)
 	private Pedido pedido;
+	
+	@ManyToOne(cascade= CascadeType.ALL)
+	private Produto produto;
 	
 	public Pedido getPedido() {
 		return pedido;
@@ -29,9 +33,6 @@ public class ItemPedido {
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
-	
-	@ManyToOne
-	private Produto produto;
 	
 	public Produto getProduto() {
 		return produto;

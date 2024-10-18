@@ -8,10 +8,10 @@ import org.serratec.serratecpub.model.Endereco;
 public record ClienteDto(
 		Long id,
 		String email,
-		String nomeCompleto,
+		String nome,
 		String telefone,
 		LocalDate dataNascimento,
-		Endereco endereco
+		EnderecoDto endereco
 		) {
 	
 	
@@ -19,14 +19,19 @@ public record ClienteDto(
 			Cliente cliente = new Cliente();
             cliente.setId(this.id);
             cliente.setEmail(this.email);
-            cliente.setNomeCompleto(this.nomeCompleto);
+            cliente.setNome(this.nome);
             cliente.setTelefone(this.telefone);
             cliente.setDataNascimento(this.dataNascimento);
-            cliente.setEndereco(this.endereco);
+          //  cliente.setEndereco(this.endereco.toEntity());
             return cliente;
         }
 		
+		
 		public static ClienteDto toDto(Cliente cliente) {
-			return new ClienteDto(cliente.getId(), cliente.getEmail(), cliente.getNomeCompleto(), cliente.getTelefone(), cliente.getDataNascimento(), cliente.getEndereco());
+			return new ClienteDto(cliente.getId(), 
+					cliente.getEmail(), 
+					cliente.getNome(), 
+					cliente.getTelefone(), 
+					cliente.getDataNascimento(), EnderecoDto.toDto(cliente.getEndereco()));
 		}
 }

@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -23,13 +22,16 @@ public class Cliente {
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 5, max = 100)
 	private String email;
-	private String nomeCompleto;
+	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	private String nome;
+//	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+//	@Size(min=11,max=11, message="Somente numeros no CPF")
 	private String cpf;
+//	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	private String telefone;
 	private LocalDate dataNascimento;
 	
 	@OneToOne(cascade= CascadeType.ALL)
-	@JoinColumn(name="endereco")
 	private Endereco endereco;
 	
 	public Endereco getEndereco() {
@@ -47,8 +49,8 @@ public class Cliente {
 		return email;
 	}
 
-	public String getNomeCompleto() {
-		return nomeCompleto;
+	public String getNome() {
+		return nome;
 	}
 
 	public String getCpf() {
@@ -71,8 +73,8 @@ public class Cliente {
 		this.email = email;
 	}
 
-	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
+	public void setNome(String nomeCompleto) {
+		this.nome = nomeCompleto;
 	}
 
 	public void setCpf(String cpf) {

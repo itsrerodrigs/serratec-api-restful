@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.serratec.serratecpub.util.TratamentoDeErro;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,7 +37,7 @@ public class Produto {
 	private String imagem;
 	
 	
-	@ManyToOne
+	@ManyToOne(cascade= CascadeType.ALL)
 	private Categoria categoria;
 
 	@OneToMany(mappedBy = "produto")

@@ -12,8 +12,8 @@ public record ItemPedidoDto(
   Double valorBruto,
   Double valorLiquido,
   Double valorDesconto,
-  Pedido pedido,
-  Produto produto
+  PedidoDto pedido,
+  ProdutoDto produto
   ) {
 
   public ItemPedido toEntity() {
@@ -24,8 +24,8 @@ public record ItemPedidoDto(
    itemPedido.setPercentualDesconto(this.percentualDesconto);
    itemPedido.setValorBruto(calcularValorBruto());
    itemPedido.setValorLiquido(calcularValorLiquido());
-   itemPedido.setPedido(this.pedido);
-   itemPedido.setProduto(this.produto);
+   itemPedido.setPedido(this.pedido.toEntity());
+   itemPedido.setProduto(this.produto.toEntity());
    itemPedido.setValorDesconto(calcularValorDesconto());
    return itemPedido;
   }
@@ -33,7 +33,8 @@ public record ItemPedidoDto(
   public static ItemPedidoDto toDto(ItemPedido itemPedido) {
    return new ItemPedidoDto(itemPedido.getId(), itemPedido.getQuantidade(), itemPedido.getPrecoVenda(),
      itemPedido.getPercentualDesconto(), itemPedido.getValorBruto(), itemPedido.getValorLiquido(),
-     itemPedido.getValorDesconto(), itemPedido.getPedido(), itemPedido.getProduto());
+     itemPedido.getValorDesconto(), PedidoDto.toDto(itemPedido.getPedido()),
+     ProdutoDto.toDto(itemPedido.getProduto()));
   }
 
   public double calcularValorBruto() {

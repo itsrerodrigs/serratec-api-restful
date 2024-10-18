@@ -19,8 +19,8 @@ public class Categoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
-	@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
+
+	//@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
 	@Enumerated(EnumType.STRING)
 	private CategoriaNome categoriaNome;
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
@@ -30,9 +30,9 @@ public class Categoria {
 	@OneToMany(mappedBy = "categoria")
 	private List<Produto> produtos;
 	
-	public List<Produto> getProdutos() {
-		return produtos;
-	}
+//	public List<Produto> getProdutos() {
+//		return produtos;
+//	}
 	public void setProdutos(List<Produto> produtos) {
 		produtos.forEach(p -> p.setCategoria(this));
 		this.produtos = produtos;
