@@ -12,60 +12,64 @@ import org.serratec.serratecpub.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service 
+@Service
 public class PedidoService {
 	@Autowired
 	private PedidoRepository pedidoRepositoriy;
-	  @Autowired
-	    private ViaCepService  viaCepService;
-	  
-	  @Autowired
-	    private EnderecoRepository enderecoRepository;
-	public List<PedidoDto> obterTodosPedidos(){
+	@Autowired
+	private ViaCepService viaCepService;
+
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+
+	public List<PedidoDto> obterTodosPedidos() {
 		return pedidoRepositoriy.findAll().stream().map(p -> PedidoDto.toDto(p)).toList();
 	}
-	
-	public Optional<PedidoDto> obterPedidosPorId(Long id){
-		if(!pedidoRepositoriy.existsById(id)) {
-			return Optional.empty();	
-			}
+
+	public Optional<PedidoDto> obterPedidosPorId(Long id) {
+		if (!pedidoRepositoriy.existsById(id)) {
+			return Optional.empty();
+		}
 		return Optional.of(PedidoDto.toDto(pedidoRepositoriy.findById(id).get()));
 	}
+
 	public List<PedidoDto> obterPedidosPorNomeCliente(String nome) {
 		return pedidoRepositoriy.BuscarPedidoPorNomeCliente(nome).stream().map(PedidoDto::toDto).toList();
 	}
-	
+
 //	public PedidoDto salvarPedido(PedidoDto pedidoDto) {
 //		Pedido pedidoEntity = pedidoRepositoriy.save(pedidoDto.toEntity());
 //		return PedidoDto.toDto(pedidoEntity);
 //	}
 	public PedidoDto salvarPedido(PedidoDto pedidoDto) {
 		Pedido pedidoEntity = pedidoRepositoriy.save(pedidoDto.toEntity());
-		 
-	        if (pedidoDto.cliente().getEndereco() != null) {
-	            Endereco endereco = viaCepService.preencherEnderecoComCep(pedidoDto.cliente().getEndereco().getCep());
-	            if (endereco != null) {
-	                endereco.setNumero(pedidoDto.cliente().getEndereco().getNumero());
-	                endereco.setComplemento(pedidoDto.cliente().getEndereco().getComplemento());
-	                endereco = enderecoRepository.save(endereco);
-	                pedidoDto.cliente().setEndereco(endereco); 
-	            } else {
-	                throw new IllegalArgumentException("CEP inválido ou sem retorno de dados");
-	            }
-	        }
-	        pedidoEntity = pedidoRepositoriy.save(pedidoEntity);
-	        return PedidoDto.toDto(pedidoEntity);
-		
+
+		if (pedidoDto.cliente().getEndereco() != null) {
+			Endereco endereco = viaCepService.preencherEnderecoComCep(pedidoDto.cliente().getEndereco().getCep());
+			if (endereco != null) {
+				endereco.setNumero(pedidoDto.cliente().getEndereco().getNumero());
+				endereco.setComplemento(pedidoDto.cliente().getEndereco().getComplemento());
+				endereco = enderecoRepository.save(endereco);
+				pedidoDto.cliente().setEndereco(endereco);
+			} else {
+				throw new IllegalArgumentException("CEP inválido ou sem retorno de dados");
+			}
+		}
+		pedidoEntity = pedidoRepositoriy.save(pedidoEntity);
+		return PedidoDto.toDto(pedidoEntity);
+
 	}
+
 	public boolean apagarPedido(Long id) {
-		if(!pedidoRepositoriy.existsById(id)) {
+		if (!pedidoRepositoriy.existsById(id)) {
 			return false;
 		}
 		pedidoRepositoriy.deleteById(id);
 		return true;
 	}
-	public Optional<PedidoDto> alterarPedido(Long id, PedidoDto pedidoDto){
-		if(!pedidoRepositoriy.existsById(id)) {
+
+	public Optional<PedidoDto> alterarPedido(Long id, PedidoDto pedidoDto) {
+		if (!pedidoRepositoriy.existsById(id)) {
 			return Optional.empty();
 		}
 		Pedido pedidoEntity = pedidoDto.toEntity();

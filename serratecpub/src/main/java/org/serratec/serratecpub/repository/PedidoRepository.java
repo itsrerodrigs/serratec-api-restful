@@ -8,7 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long>{
 	
-	@Query("SELECT p FROM Pedido p JOIN p.cliente c WHERE (c.nome) ilike LOWER(CONCAT('%',:nome,'%'))")
+	@Query("SELECT p FROM Pedido p "
+			+ "JOIN p.cliente c "
+			+ "WHERE TRANSLATE(c.nome, "
+			+ "'ÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÔÖÚÙÛÜÇáàãâäéèêëíìîïóòõôöúùûüç',"
+			+ " 'AAAAAEEEEIIIIOOOOOUUUUCaaaaaeeeeiiiiooooouuuuc') "
+			+ "ILIKE CONCAT('%', TRANSLATE(:nome, "
+			+ "'ÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÔÖÚÙÛÜÇáàãâäéèêëíìîïóòõôöúùûüç', "
+			+ "'AAAAAEEEEIIIIOOOOOUUUUCaaaaaeeeeiiiiooooouuuuc'), '%')")
 	List<Pedido> BuscarPedidoPorNomeCliente(String nome);
-	
 }
