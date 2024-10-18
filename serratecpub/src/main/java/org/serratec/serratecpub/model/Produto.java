@@ -29,7 +29,7 @@ public class Produto {
 	@Size(max = 100, message = TratamentoDeErro.SizeMessage)
 	private String descricao;
 	@Positive
-	private int qntEstoque;
+	private int qtdEstoque;
 	private LocalDate dataCadastro = LocalDate.now();//data de cadastro vai automaticamente
 	@Positive
 	private Double valorUnitario;
@@ -65,8 +65,8 @@ public class Produto {
 		return descricao;
 	}
 
-	public int getQntEstoque() {
-		return qntEstoque;
+	public int getQtdEstoque() {
+		return qtdEstoque;
 	}
 
 	public LocalDate getDataCadastro() {
@@ -97,8 +97,8 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public void setQntEstoque(int qntEstoque) {
-		this.qntEstoque = qntEstoque;
+	public void setQtdEstoque(int qntEstoque) {
+		this.qtdEstoque = qntEstoque;
 	}
 
 	public void setDataCadastro(LocalDate dataCadastro) {

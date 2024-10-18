@@ -18,7 +18,7 @@ public record ProdutoDto(
 			produto.setId(this.id);
 			produto.setNome(this.nome);
 			produto.setDescricao(this.descricao);
-			produto.setQntEstoque(this.qntEstoque);
+			produto.setQtdEstoque(this.qntEstoque);
 			produto.setValorUnitario(this.valorUnitario);
 			produto.setImagem(this.imagem);
 			produto.setCategoria(this.categoria);
@@ -26,7 +26,7 @@ public record ProdutoDto(
 		}
 			
 		public static ProdutoDto toDto(Produto produto) {
-			return new ProdutoDto(produto.getId(), produto.getNome(), produto.getDescricao(), produto.getQntEstoque(),
+			return new ProdutoDto(produto.getId(), produto.getNome(), produto.getDescricao(), produto.getQtdEstoque(),
 					produto.getValorUnitario(), produto.getImagem(), produto.getCategoria());
 		}
 }

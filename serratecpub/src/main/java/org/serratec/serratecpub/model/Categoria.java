@@ -22,7 +22,7 @@ public class Categoria {
 
 	//@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
 	@Enumerated(EnumType.STRING)
-	private CategoriaNome categoriaNome;
+	private CategoriaNome nome;
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(max = 150, message = TratamentoDeErro.SizeMessage)
 	private String descricao;
@@ -42,7 +42,7 @@ public class Categoria {
 		return id;
 	}
 	public CategoriaNome getCategoriaNome() {
-		return categoriaNome;
+		return nome;
 	}
 	public String getDescricao() {
 		return descricao;
@@ -51,7 +51,7 @@ public class Categoria {
 		this.id = id;
 	}
 	public void setCategoriaNome(CategoriaNome categoriaNome) {
-		this.categoriaNome = categoriaNome;
+		this.nome = categoriaNome;
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;

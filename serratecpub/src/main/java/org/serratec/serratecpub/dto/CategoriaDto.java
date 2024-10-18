@@ -5,14 +5,14 @@ import org.serratec.serratecpub.model.CategoriaNome;
 
 public record CategoriaDto(
 		Long id,
-		CategoriaNome categoriaNome,
+		CategoriaNome nome,
 		String descricao
 		) {
 
 		public Categoria toEntity() {
 			Categoria categoria = new Categoria();
 			categoria.setId(this.id);
-			categoria.setCategoriaNome(this.categoriaNome);
+			categoria.setCategoriaNome(this.nome);
 			categoria.setDescricao(this.descricao);
 			return categoria;
 		}
