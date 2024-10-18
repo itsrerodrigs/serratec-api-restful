@@ -40,15 +40,14 @@ public class Produto {
 	@ManyToOne(cascade= CascadeType.ALL)
 	private Categoria categoria;
 
-	@OneToMany(mappedBy = "produto")
-	private List<ItemPedido> ItemPedido;
+	@ManyToOne
+	private ItemPedido ItemPedido;
 	
-	public List<ItemPedido> getItemPedido() {
-		ItemPedido.forEach(p -> p.setProduto(this));
+	public ItemPedido getItemPedido() {
 		return ItemPedido;
 	}
 
-	public void setItemPedido(List<ItemPedido> itemPedido) {
+	public void setItemPedido(ItemPedido itemPedido) {
 		ItemPedido = itemPedido;
 	}
 	

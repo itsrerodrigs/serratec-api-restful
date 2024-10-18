@@ -1,14 +1,16 @@
 package org.serratec.serratecpub.model;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+
 import org.springframework.stereotype.Service;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Service
 public class ViaCepService {
@@ -24,7 +26,7 @@ public class ViaCepService {
 
             Gson gson = new Gson();
             JsonObject enderecoJson = JsonParser.parseString(body).getAsJsonObject();
-            
+
             if (enderecoJson.has("erro")) {
                 throw new IllegalArgumentException("CEP inválido ou não encontrado");
             }
@@ -43,4 +45,3 @@ public class ViaCepService {
         }
     }
 }
-

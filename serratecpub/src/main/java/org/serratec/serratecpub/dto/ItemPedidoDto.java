@@ -1,8 +1,8 @@
 package org.serratec.serratecpub.dto;
 
+import java.util.List;
+
 import org.serratec.serratecpub.model.ItemPedido;
-import org.serratec.serratecpub.model.Pedido;
-import org.serratec.serratecpub.model.Produto;
 
 public record ItemPedidoDto(
   Long id,
@@ -13,7 +13,7 @@ public record ItemPedidoDto(
   Double valorLiquido,
   Double valorDesconto,
   PedidoDto pedido,
-  ProdutoDto produto
+  List<ProdutoDto> produto
   ) {
 
   public ItemPedido toEntity() {
@@ -25,16 +25,22 @@ public record ItemPedidoDto(
    itemPedido.setValorBruto(calcularValorBruto());
    itemPedido.setValorLiquido(calcularValorLiquido());
    itemPedido.setPedido(this.pedido.toEntity());
-   itemPedido.setProduto(this.produto.toEntity());
+   itemPedido.setProduto(this.produto.stream().map(p->p.toEntity()).toList());
    itemPedido.setValorDesconto(calcularValorDesconto());
    return itemPedido;
   }
 
   public static ItemPedidoDto toDto(ItemPedido itemPedido) {
-   return new ItemPedidoDto(itemPedido.getId(), itemPedido.getQuantidade(), itemPedido.getPrecoVenda(),
-     itemPedido.getPercentualDesconto(), itemPedido.getValorBruto(), itemPedido.getValorLiquido(),
-     itemPedido.getValorDesconto(), PedidoDto.toDto(itemPedido.getPedido()),
-     ProdutoDto.toDto(itemPedido.getProduto()));
+   return new ItemPedidoDto(
+		   itemPedido.getId(), 
+		   itemPedido.getQuantidade(), 
+		   itemPedido.getPrecoVenda(),
+		   itemPedido.getPercentualDesconto(), 
+		   itemPedido.getValorBruto(), 
+		   itemPedido.getValorLiquido(),
+		   itemPedido.getValorDesconto(), 
+		   PedidoDto.toDto(itemPedido.getPedido()),
+		   itemPedido.getProduto().stream().map(p->ProdutoDto.toDto(p)).toList());
   }
 
   public double calcularValorBruto() {

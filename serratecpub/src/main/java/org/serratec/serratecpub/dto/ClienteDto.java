@@ -3,7 +3,7 @@ package org.serratec.serratecpub.dto;
 import java.time.LocalDate;
 
 import org.serratec.serratecpub.model.Cliente;
-import org.serratec.serratecpub.model.Endereco;
+
 
 public record ClienteDto(
 		Long id,
@@ -22,7 +22,7 @@ public record ClienteDto(
             cliente.setNome(this.nome);
             cliente.setTelefone(this.telefone);
             cliente.setDataNascimento(this.dataNascimento);
-          //  cliente.setEndereco(this.endereco.toEntity());
+            cliente.setEndereco(this.endereco.toEntity());
             return cliente;
         }
 		

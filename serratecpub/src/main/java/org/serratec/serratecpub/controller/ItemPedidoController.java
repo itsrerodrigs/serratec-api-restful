@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.serratec.serratecpub.dto.ItemPedidoDto;
+import org.serratec.serratecpub.model.ItemPedido;
 import org.serratec.serratecpub.service.ItemPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,11 +46,11 @@ public class ItemPedidoController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deletarItemPedido(@PathVariable Long id, ItemPedidoDto itemPedidoDto) {
+	public ResponseEntity<String> deletarItemPedido(@PathVariable Long id) {
 		if (!itemPedidoService.apagarItemPedido(id)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item pedido não encontrado!");
 		}
-		return ResponseEntity.ok("Item pedido " + id + " " + itemPedidoDto + " excluído com sucesso!");
+		return ResponseEntity.ok("Item pedido " + id  + " excluído com sucesso!");
 	}
 
 	@PutMapping("/{id}")

@@ -1,11 +1,14 @@
 package org.serratec.serratecpub.model;
 
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,8 +27,8 @@ public class ItemPedido {
 	@ManyToOne(cascade= CascadeType.ALL)
 	private Pedido pedido;
 	
-	@ManyToOne(cascade= CascadeType.ALL)
-	private Produto produto;
+	@OneToMany(cascade= CascadeType.ALL)
+	private List<Produto> produto;
 	
 	public Pedido getPedido() {
 		return pedido;
@@ -34,10 +37,11 @@ public class ItemPedido {
 		this.pedido = pedido;
 	}
 	
-	public Produto getProduto() {
+	public List<Produto> getProduto() {
 		return produto;
 	}
-	public void setProduto(Produto produto) {
+	public void setProduto(List<Produto> produto) {
+		produto.forEach(a->a.setItemPedido(this));
 		this.produto = produto;
 	}
 
