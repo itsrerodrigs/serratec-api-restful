@@ -1,14 +1,11 @@
 package org.serratec.serratecpub.model;
 
-import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,11 +21,11 @@ public class ItemPedido {
 	private Double valorLiquido;
 	private Double valorDesconto;
 	
-	@ManyToOne(cascade= CascadeType.ALL)
+	@ManyToOne
 	private Pedido pedido;
 	
-	@OneToMany(cascade= CascadeType.ALL)
-	private List<Produto> produto;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Produto produto;
 	
 	public Pedido getPedido() {
 		return pedido;
@@ -37,14 +34,16 @@ public class ItemPedido {
 		this.pedido = pedido;
 	}
 	
-	public List<Produto> getProduto() {
+	public Produto getProduto() {
 		return produto;
 	}
-	public void setProduto(List<Produto> produto) {
-		produto.forEach(a->a.setItemPedido(this));
+	public void setPrecoVenda(Double precoVenda) {
+		this.precoVenda = precoVenda;
+	}
+	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
-
+	
 	
 	public Long getId() {
 		return id;
@@ -82,10 +81,6 @@ public class ItemPedido {
 		this.quantidade = quantidade;
 	}
 
-	public void setPrecoVenda(Double precoVenda) {
-		this.precoVenda = precoVenda;
-	}
-
 	public void setPercentualDesconto(int percentualDesconto) {
 		this.percentualDesconto = percentualDesconto;
 	}
@@ -101,4 +96,10 @@ public class ItemPedido {
 	public void setValorDesconto(Double valorDesconto) {
 		this.valorDesconto = valorDesconto;
 	}
+	
+	public void calcularValores() {
+        this.valorBruto = this.precoVenda * this.quantidade;
+        this.valorDesconto = this.valorBruto * (this.percentualDesconto / 100.0);
+        this.valorLiquido = this.valorBruto - this.valorDesconto;
+   }
 }

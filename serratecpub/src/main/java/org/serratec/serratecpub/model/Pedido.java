@@ -1,10 +1,12 @@
 package org.serratec.serratecpub.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,16 +25,16 @@ public class Pedido {
 	private Double valorTotal;
 	
 	@ManyToOne(cascade= CascadeType.ALL)
-	private Cliente cliente;//deixar somente assim
+	private Cliente cliente;
 	
-	@OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL)
-	private List<ItemPedido> itemPedido;
-
+	@OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<ItemPedido> itemPedido = new ArrayList<>();
+	
 	public List<ItemPedido> getItemPedido() {
 		return itemPedido;
 	}
 	public void setItensPedido(List<ItemPedido> ItemPedido) {
-		ItemPedido.forEach(p -> p.setPedido(this));
+		ItemPedido.forEach(ip -> ip.setPedido(this));
 		this.itemPedido = ItemPedido;
 	}
 	

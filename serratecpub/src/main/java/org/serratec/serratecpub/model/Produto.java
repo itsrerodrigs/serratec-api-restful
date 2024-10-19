@@ -1,6 +1,7 @@
 package org.serratec.serratecpub.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.serratec.serratecpub.util.TratamentoDeErro;
 
@@ -10,7 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -38,18 +39,18 @@ public class Produto {
 	private String imagem;
 	
 	
-	@ManyToOne
-	private ItemPedido ItemPedido;
-	
-	public ItemPedido getItemPedido() {
+	@OneToMany(mappedBy = "produto")
+	private List<ItemPedido> ItemPedido;
+
+	public List<ItemPedido> getItemPedido() {
 		return ItemPedido;
 	}
-
-	public void setItemPedido(ItemPedido itemPedido) {
+	public void setItemPedido(List<ItemPedido> itemPedido) {
+		ItemPedido.forEach(ip -> ip.setProduto(this));
 		ItemPedido = itemPedido;
 	}
-	
 
+	
 	public Long getId() {
 		return id;
 	}
