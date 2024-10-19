@@ -6,7 +6,7 @@ import org.serratec.serratecpub.model.CategoriaNome;
 import org.serratec.serratecpub.model.Produto;
 
 public record ProdutoDto(Long id, String nome, CategoriaNome categoria, String descricao, LocalDate dataCadastro,
-		int qntEstoque, Double valorUnitario, String imagem) {
+		int qtdEstoque, Double valorUnitario, String imagem) {
 
 	public Produto toEntity() {
 		Produto produto = new Produto();
@@ -15,7 +15,7 @@ public record ProdutoDto(Long id, String nome, CategoriaNome categoria, String d
 		produto.setCategoria(CategoriaNome.valueOf(this.categoria.name()));
 		produto.setDescricao(this.descricao);
 		produto.setDataCadastro(this.dataCadastro);
-		produto.setQtdEstoque(this.qntEstoque);
+		produto.setQtdEstoque(this.qtdEstoque);
 		produto.setValorUnitario(this.valorUnitario);
 		produto.setImagem(this.imagem);
 		return produto;

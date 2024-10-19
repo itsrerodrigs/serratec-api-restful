@@ -37,8 +37,8 @@ public class ItemPedido {
 	public Produto getProduto() {
 		return produto;
 	}
-	public void setPrecoVenda(Double precoVenda) {
-		this.precoVenda = precoVenda;
+	public void setPrecoVenda(Produto produto) {
+		this.precoVenda = produto.getValorUnitario()*2;//multiplicar pela porcentagem de lucro da loja
 	}
 	public void setProduto(Produto produto) {
 		this.produto = produto;

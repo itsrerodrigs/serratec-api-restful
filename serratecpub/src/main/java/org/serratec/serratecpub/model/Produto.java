@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.serratec.serratecpub.util.TratamentoDeErro;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
@@ -22,21 +25,34 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
 	private String nome;
+	
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private CategoriaNome categoria;
+	
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(max = 100, message = TratamentoDeErro.SizeMessage)
 	private String descricao;
+	
+	@NotNull
 	@Positive
 	private int qtdEstoque;
+	
+	@NotNull
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataCadastro = LocalDate.now();//data de cadastro vai automaticamente
+	
+	@NotNull
 	@Positive
 	private Double valorUnitario;
+	
 	@Size(min = 1, max = 500, message = TratamentoDeErro.SizeMessage)
 	private String imagem;
+	
 	
 	
 	@OneToMany(mappedBy = "produto")

@@ -1,24 +1,16 @@
 package org.serratec.serratecpub.dto;
 
 import org.serratec.serratecpub.model.ItemPedido;
+import org.serratec.serratecpub.model.Produto;
 
-public record ItemPedidoDto(
-    Long id,
-    int quantidade,
-    Double precoVenda,
-    int percentualDesconto,
-    Double valorBruto,
-    Double valorLiquido,
-    Double valorDesconto,
-    PedidoDto pedido,
-    ProdutoDto produto
-) {
+public record ItemPedidoDto(Long id, int quantidade, Double precoVenda, int percentualDesconto, Double valorBruto,
+		Double valorLiquido, Double valorDesconto, PedidoDto pedido, ProdutoDto produto) {
 
-    public ItemPedido toEntity() {
+	public ItemPedido toEntity() {
         ItemPedido itemPedido = new ItemPedido();
         itemPedido.setId(this.id);
         itemPedido.setQuantidade(this.quantidade);
-        itemPedido.setPrecoVenda(this.precoVenda);
+        itemPedido.setPrecoVenda(this.produto.toEntity().getValorUnitario() * 2);
         itemPedido.setPercentualDesconto(this.percentualDesconto);
         if (this.pedido != null) {
             itemPedido.setPedido(this.pedido.toEntity());
