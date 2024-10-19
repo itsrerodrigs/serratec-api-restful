@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,9 +27,11 @@ public class Pedido {
 	private StatusPedido statusPedido;
 	private Double valorTotal;
 	
+	@JsonBackReference
 	@ManyToOne(cascade= CascadeType.ALL)
 	private Cliente cliente;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ItemPedido> itemPedido = new ArrayList<>();
 	

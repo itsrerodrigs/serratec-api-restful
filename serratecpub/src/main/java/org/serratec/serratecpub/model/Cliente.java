@@ -13,34 +13,39 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-
 @Entity
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	private String nome;
+	
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 5, max = 100)
 	private String email;
-	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
-	private String nome;
+	
 //	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
-//	@Size(min=11,max=11, message="Somente numeros no CPF")
+	@Size(min=11,max=11, message="Somente numeros no CPF")
 	private String cpf;
-//	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	
+	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	private String telefone;
+	
 	private LocalDate dataNascimento;
-	
-	@OneToOne(cascade= CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
 	private Endereco endereco;
-	
+
 	public Endereco getEndereco() {
 		return endereco;
 	}
+
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}

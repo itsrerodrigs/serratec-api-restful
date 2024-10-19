@@ -46,11 +46,11 @@ public class ProdutoController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deletarProduto(@PathVariable Long id, ProdutoDto produtoDto) {
+	public ResponseEntity<String> deletarProduto(@PathVariable Long id) {
 		if (!produtoService.apagarProduto(id)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado!");
 		}
-		return ResponseEntity.ok("Produto " + produtoDto + "excluído com sucesso!");
+		return ResponseEntity.ok("Produto " + id + " excluído com sucesso!");
 	}
 
 	@PutMapping("/{id}")

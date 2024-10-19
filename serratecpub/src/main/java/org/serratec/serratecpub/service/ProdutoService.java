@@ -11,32 +11,36 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProdutoService {
+
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
-	public List<ProdutoDto> obterTodosProdutos(){
+
+	public List<ProdutoDto> obterTodosProdutos() {
 		return produtoRepository.findAll().stream().map(p -> ProdutoDto.toDto(p)).toList();
 	}
-	
-	public Optional<ProdutoDto> obterProdutosPorId(Long id){
-		if(!produtoRepository.existsById(id)) {
-			return Optional.empty();	
-			}
+
+	public Optional<ProdutoDto> obterProdutosPorId(Long id) {
+		if (!produtoRepository.existsById(id)) {
+			return Optional.empty();
+		}
 		return Optional.of(ProdutoDto.toDto(produtoRepository.findById(id).get()));
 	}
+
 	public ProdutoDto salvarProduto(ProdutoDto produtoDto) {
 		Produto produtoEntity = produtoRepository.save(produtoDto.toEntity());
 		return ProdutoDto.toDto(produtoEntity);
 	}
+
 	public boolean apagarProduto(Long id) {
-		if(!produtoRepository.existsById(id)) {
+		if (!produtoRepository.existsById(id)) {
 			return false;
 		}
 		produtoRepository.deleteById(id);
 		return true;
 	}
-	public Optional<ProdutoDto> alterarProduto(Long id, ProdutoDto produtoDto){
-		if(!produtoRepository.existsById(id)) {
+
+	public Optional<ProdutoDto> alterarProduto(Long id, ProdutoDto produtoDto) {
+		if (!produtoRepository.existsById(id)) {
 			return Optional.empty();
 		}
 		Produto produtoEntity = produtoDto.toEntity();

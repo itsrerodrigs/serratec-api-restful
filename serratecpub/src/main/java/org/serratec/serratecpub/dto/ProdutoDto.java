@@ -5,8 +5,14 @@ import java.time.LocalDate;
 import org.serratec.serratecpub.model.CategoriaNome;
 import org.serratec.serratecpub.model.Produto;
 
-public record ProdutoDto(Long id, String nome, CategoriaNome categoria, String descricao, LocalDate dataCadastro,
-		int qtdEstoque, Double valorUnitario, String imagem) {
+public record ProdutoDto(Long id,
+		String nome,
+		CategoriaNome categoria,
+		String descricao,
+		LocalDate dataCadastro,
+		int qtdEstoque,
+		Double valorUnitario,
+		String imagem) {
 
 	public Produto toEntity() {
 		Produto produto = new Produto();

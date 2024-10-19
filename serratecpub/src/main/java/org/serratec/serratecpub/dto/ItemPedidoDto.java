@@ -1,21 +1,28 @@
 package org.serratec.serratecpub.dto;
 
 import org.serratec.serratecpub.model.ItemPedido;
-import org.serratec.serratecpub.model.Produto;
 
-public record ItemPedidoDto(Long id, int quantidade, Double precoVenda, int percentualDesconto, Double valorBruto,
-		Double valorLiquido, Double valorDesconto, PedidoDto pedido, ProdutoDto produto) {
+public record ItemPedidoDto(
+		Long id,
+		Double precoVenda,
+		int quantidade,
+		int percentualDesconto,
+		Double valorBruto,
+		Double valorLiquido,
+		Double valorDesconto,
+		ProdutoDto produto) {
 
 	public ItemPedido toEntity() {
         ItemPedido itemPedido = new ItemPedido();
         itemPedido.setId(this.id);
+        itemPedido.setPrecoVenda(this.produto().toEntity().getValorUnitario());
         itemPedido.setQuantidade(this.quantidade);
-        itemPedido.setPrecoVenda(this.produto.toEntity().getValorUnitario() * 2);
         itemPedido.setPercentualDesconto(this.percentualDesconto);
-        if (this.pedido != null) {
-            itemPedido.setPedido(this.pedido.toEntity());
+        if (this.produto != null) {
+        	itemPedido.setProduto(this.produto.toEntity());        	
+        }else {
+        	throw new RuntimeException("Produto não encontrado");
         }
-        itemPedido.setProduto(this.produto.toEntity());
         itemPedido.calcularValores();
         return itemPedido;
     }
@@ -23,19 +30,22 @@ public record ItemPedidoDto(Long id, int quantidade, Double precoVenda, int perc
     public static ItemPedidoDto toDto(ItemPedido itemPedido) {
         return new ItemPedidoDto(
             itemPedido.getId(),
-            itemPedido.getQuantidade(),
             itemPedido.getPrecoVenda(),
+            itemPedido.getQuantidade(),
             itemPedido.getPercentualDesconto(),
             itemPedido.getValorBruto(),
             itemPedido.getValorLiquido(),
             itemPedido.getValorDesconto(),
-            PedidoDto.toDto(itemPedido.getPedido()),
             ProdutoDto.toDto(itemPedido.getProduto())
         );
     }
 
     public Double calcularValorBruto() {
-        return this.precoVenda * this.quantidade;
+    	if (this.produto != null) {
+            return this.produto.toEntity().getValorUnitario() * this.quantidade;
+        } else {
+            throw new RuntimeException("Produto não encontrado");
+        }
     }
 
     public Double calcularValorDesconto() {

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/itempedidos")
+@RequestMapping("/itenspedidos")
 public class ItemPedidoController {
 	@Autowired
 	private ItemPedidoService itemPedidoService;

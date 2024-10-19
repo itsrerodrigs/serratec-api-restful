@@ -1,15 +1,15 @@
 package org.serratec.serratecpub.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "item_pedido")
 public class ItemPedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +21,12 @@ public class ItemPedido {
 	private Double valorLiquido;
 	private Double valorDesconto;
 	
+	//adicionar CascadeType.ALL caso esta vire a classe pai
+	@JsonBackReference
 	@ManyToOne
 	private Pedido pedido;
 	
+	@JsonBackReference
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Produto produto;
 	
@@ -37,11 +40,12 @@ public class ItemPedido {
 	public Produto getProduto() {
 		return produto;
 	}
-	public void setPrecoVenda(Produto produto) {
-		this.precoVenda = produto.getValorUnitario()*2;//multiplicar pela porcentagem de lucro da loja
-	}
+	public void setPrecoVenda(Double precoVenda) {
+        this.precoVenda = precoVenda;
+    }
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+		setPrecoVenda(produto.getValorUnitario());
 	}
 	
 	

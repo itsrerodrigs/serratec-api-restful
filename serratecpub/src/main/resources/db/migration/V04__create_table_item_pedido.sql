@@ -6,7 +6,7 @@ CREATE TABLE item_pedido(
 	valor_bruto DECIMAL,
 	valor_liquido DECIMAL,
 	produto_id BIGINT,
-
+	
 	CONSTRAINT fk_produto FOREIGN KEY(produto_id)
-	REFERENCES produto(id)
+	REFERENCES produto(id) ON DELETE CASCADE
 )

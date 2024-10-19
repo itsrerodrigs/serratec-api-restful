@@ -6,6 +6,7 @@ import java.util.List;
 import org.serratec.serratecpub.util.TratamentoDeErro;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -53,8 +54,7 @@ public class Produto {
 	@Size(min = 1, max = 500, message = TratamentoDeErro.SizeMessage)
 	private String imagem;
 	
-	
-	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "produto")
 	private List<ItemPedido> ItemPedido;
 
@@ -65,7 +65,6 @@ public class Produto {
 		ItemPedido.forEach(ip -> ip.setProduto(this));
 		ItemPedido = itemPedido;
 	}
-
 	
 	public Long getId() {
 		return id;
