@@ -5,12 +5,15 @@ import java.util.Optional;
 
 import org.serratec.serratecpub.dto.PedidoDto;
 import org.serratec.serratecpub.model.Endereco;
+import org.serratec.serratecpub.model.ItemPedido;
 import org.serratec.serratecpub.model.Pedido;
 import org.serratec.serratecpub.model.ViaCepService;
 import org.serratec.serratecpub.repository.EnderecoRepository;
 import org.serratec.serratecpub.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class PedidoService {
@@ -55,12 +58,19 @@ public class PedidoService {
 				throw new IllegalArgumentException("CEP inválido ou sem retorno de dados");
 			}
 		}
-		  // Define o ID do primeiro item
+//		double vltd =0.0;
+//		for(ItemPedido ip : pedidoDto.itemPedido().get(0).calcularValorBruto()) {
+//			ip.setPedido(pedido);
+//			vltd += ip.getValorBruto();    		
+//			}
+//	
+//	pedido.setValorTotal(vltd);
+
 		pedidoEntity = pedidoRepositoriy.save(pedidoEntity);
 		return PedidoDto.toDto(pedidoEntity);
 
 	}
-
+	
 	public boolean apagarPedido(Long id) {
 		if (!pedidoRepositoriy.existsById(id)) {
 			return false;

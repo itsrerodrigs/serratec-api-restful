@@ -18,7 +18,7 @@ public class ItemPedido {
 	private int quantidade;
 	private Double precoVenda;
 	private int percentualDesconto;
-	private Double valorBruto;
+	private double valorBruto;
 	private Double valorLiquido;
 	private Double valorDesconto;
 	
@@ -46,7 +46,7 @@ public class ItemPedido {
     }
 	public void setProduto(Produto produto) {
 		this.produto = produto;
-		setPrecoVenda(produto.getValorUnitario());
+		setPrecoVenda(produto.getValorUnitario()*2);
 	}
 	
 	
@@ -90,7 +90,7 @@ public class ItemPedido {
 		this.percentualDesconto = percentualDesconto;
 	}
 
-	public void setValorBruto(Double valorBruto) {
+	public void setValorBruto(double valorBruto) {
 		this.valorBruto = valorBruto;
 	}
 

@@ -109,7 +109,7 @@ public class Produto {
 	}
 
 	public void setDataCadastro(LocalDate dataCadastro) {
-		this.dataCadastro = dataCadastro;
+		this.dataCadastro = LocalDate.now();
 	}
 
 	public void setValorUnitario(Double valorUnitario) {

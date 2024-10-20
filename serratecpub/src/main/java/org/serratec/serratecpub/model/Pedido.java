@@ -25,7 +25,7 @@ public class Pedido {
 	private LocalDate dataEntrega;
 	private LocalDate dataEnvio;
 	private StatusPedido statusPedido;
-	private Double valorTotal;
+	private double valorTotal;
 	
 	@JsonBackReference
 	@ManyToOne(cascade= CascadeType.ALL)
@@ -33,7 +33,7 @@ public class Pedido {
 	
 	
 	@OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL)
-	private List<ItemPedido> itemPedido;
+	private List<ItemPedido> itemPedido =new ArrayList<>();
 	
 	private Long itemPedidoId;
 	
@@ -48,7 +48,8 @@ public class Pedido {
 		return itemPedido;
 	}
 	public void setItensPedido(List<ItemPedido> ItemPedido) {
-		ItemPedido.forEach(ip -> ip.setPedido(this));
+		
+		ItemPedido.forEach(ip -> ip.setPedido(this)		);
 		this.itemPedido = ItemPedido;
 		
         if (!itemPedido.isEmpty()) {
@@ -77,7 +78,7 @@ public class Pedido {
 		return statusPedido;
 	}
 
-	public Double getValorTotal() {
+	public double getValorTotal() {
 		return valorTotal;
 	}
 
@@ -90,11 +91,11 @@ public class Pedido {
 	}
 
 	public void setDataPedido(LocalDate dataPedido) {
-		this.dataPedido = dataPedido;
+		this.dataPedido = LocalDate.now();
 	}
 
 	public void setDataEntrega(LocalDate dataEntrega) {
-		this.dataEntrega = dataEntrega;
+		this.dataEntrega = LocalDate.now().plusDays(15);
 	}
 
 	public void setDataEnvio(LocalDate dataEnvio) {
@@ -105,8 +106,9 @@ public class Pedido {
 		this.statusPedido = statusPedido;
 	}
 
-	public void setValorTotal(Double valorTotal) {
+	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
+		
 	}
 
 	public void setCliente(Cliente cliente) {
