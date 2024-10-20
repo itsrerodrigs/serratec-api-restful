@@ -31,9 +31,9 @@ public class ItemPedido {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Produto produto;
 	
-	public Pedido getPedido() {
-		return pedido;
-	}
+//	public Pedido getPedido() {
+//		return pedido;
+//	}
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}

@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,26 +34,14 @@ public class Pedido {
 	@OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL)
 	private List<ItemPedido> itemPedido =new ArrayList<>();
 	
-	private Long itemPedidoId;
 	
-	public Long getItemPedidoId() {
-		return itemPedidoId;
-	}
-	
-	public void setItemPedidoId(ItemPedido itemPedidoId) {
-		this.itemPedidoId = itemPedidoId.getId();
-	}
 	public List<ItemPedido> getItemPedido() {
 		return itemPedido;
 	}
 	public void setItensPedido(List<ItemPedido> ItemPedido) {
-		
-		ItemPedido.forEach(ip -> ip.setPedido(this)		);
+		ItemPedido.forEach(ip -> ip.setPedido(this));
 		this.itemPedido = ItemPedido;
 		
-        if (!itemPedido.isEmpty()) {
-            this.itemPedidoId = itemPedido.get(0).getId();  // Define o ID do primeiro ItemPedido
-        }
 	}
 	
 

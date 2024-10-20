@@ -6,10 +6,8 @@ CREATE TABLE pedido(
 	status_pedido smallint,
 	valor_total DECIMAL,
 	cliente_id BIGINT,
-	item_pedido_id BIGINT,
 	
 	CONSTRAINT fk_cliente FOREIGN KEY (cliente_id)
-	REFERENCES cliente(id) ON DELETE CASCADE,
-	CONSTRAINT fk_item_pedido FOREIGN KEY (item_pedido_id)
-	REFERENCES item_pedido(id) ON DELETE CASCADE
+	REFERENCES cliente(id) ON DELETE CASCADE
+	
 )
