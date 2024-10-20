@@ -8,8 +8,10 @@ import org.serratec.serratecpub.model.Pedido;
 import org.serratec.serratecpub.model.StatusPedido;
 
 public record PedidoDto(
-		Long id, LocalDate dataPedido, LocalDate dataEntrega, LocalDate dataEnvio,
-		StatusPedido statusPedido, Double valorTotal, Cliente cliente, List<ItemPedidoDto> itemPedido) {
+		Long id, LocalDate dataPedido, 
+		LocalDate dataEntrega, LocalDate dataEnvio,
+		StatusPedido statusPedido, Double valorTotal, 
+		Cliente cliente, List<ItemPedidoDto> itemPedido) {
 
 	public Pedido toEntity() {
 		Pedido pedido = new Pedido();

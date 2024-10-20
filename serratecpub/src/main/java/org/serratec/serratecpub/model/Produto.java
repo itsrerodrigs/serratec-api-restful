@@ -14,7 +14,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -39,32 +39,22 @@ public class Produto {
 	@Size(max = 100, message = TratamentoDeErro.SizeMessage)
 	private String descricao;
 	
-	@NotNull
-	@Positive
+
+	//@Positive
 	private int qtdEstoque;
 	
-	@NotNull
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	//@NotNull
+	//@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataCadastro = LocalDate.now();//data de cadastro vai automaticamente
 	
-	@NotNull
-	@Positive
+	
+	//@Positive
 	private Double valorUnitario;
 	
 	@Size(min = 1, max = 500, message = TratamentoDeErro.SizeMessage)
 	private String imagem;
 	
-	@JsonManagedReference
-	@OneToMany(mappedBy = "produto")
-	private List<ItemPedido> ItemPedido;
-
-	public List<ItemPedido> getItemPedido() {
-		return ItemPedido;
-	}
-	public void setItemPedido(List<ItemPedido> itemPedido) {
-		ItemPedido.forEach(ip -> ip.setProduto(this));
-		ItemPedido = itemPedido;
-	}
+	
 	
 	public Long getId() {
 		return id;

@@ -18,11 +18,7 @@ public record ItemPedidoDto(
         itemPedido.setPrecoVenda(this.produto().toEntity().getValorUnitario());
         itemPedido.setQuantidade(this.quantidade);
         itemPedido.setPercentualDesconto(this.percentualDesconto);
-        if (this.produto != null) {
-        	itemPedido.setProduto(this.produto.toEntity());        	
-        }else {
-        	throw new RuntimeException("Produto não encontrado");
-        }
+        itemPedido.setProduto(this.produto.toEntity());        	
         itemPedido.calcularValores();
         return itemPedido;
     }

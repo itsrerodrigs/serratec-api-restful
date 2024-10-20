@@ -31,16 +31,29 @@ public class Pedido {
 	@ManyToOne(cascade= CascadeType.ALL)
 	private Cliente cliente;
 	
-	@JsonManagedReference
-	@OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<ItemPedido> itemPedido = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL)
+	private List<ItemPedido> itemPedido;
+	
+	private Long itemPedidoId;
+	
+	public Long getItemPedidoId() {
+		return itemPedidoId;
+	}
+	
+	public void setItemPedidoId(ItemPedido itemPedidoId) {
+		this.itemPedidoId = itemPedidoId.getId();
+	}
 	public List<ItemPedido> getItemPedido() {
 		return itemPedido;
 	}
 	public void setItensPedido(List<ItemPedido> ItemPedido) {
 		ItemPedido.forEach(ip -> ip.setPedido(this));
 		this.itemPedido = ItemPedido;
+		
+        if (!itemPedido.isEmpty()) {
+            this.itemPedidoId = itemPedido.get(0).getId();  // Define o ID do primeiro ItemPedido
+        }
 	}
 	
 

@@ -42,7 +42,7 @@ public class PedidoService {
 //		return PedidoDto.toDto(pedidoEntity);
 //	}
 	public PedidoDto salvarPedido(PedidoDto pedidoDto) {
-		Pedido pedidoEntity = pedidoRepositoriy.save(pedidoDto.toEntity());
+		Pedido pedidoEntity = pedidoDto.toEntity();
 
 		if (pedidoDto.cliente().getEndereco() != null) {
 			Endereco endereco = viaCepService.preencherEnderecoComCep(pedidoDto.cliente().getEndereco().getCep());
@@ -55,6 +55,7 @@ public class PedidoService {
 				throw new IllegalArgumentException("CEP inválido ou sem retorno de dados");
 			}
 		}
+		  // Define o ID do primeiro item
 		pedidoEntity = pedidoRepositoriy.save(pedidoEntity);
 		return PedidoDto.toDto(pedidoEntity);
 

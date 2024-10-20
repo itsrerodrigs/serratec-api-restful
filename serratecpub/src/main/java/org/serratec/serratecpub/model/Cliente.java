@@ -27,7 +27,7 @@ public class Cliente {
 	private String email;
 	
 //	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
-	@Size(min=11,max=11, message="Somente numeros no CPF")
+	//@Size(min=11,max=11, message="Somente numeros no CPF")
 	private String cpf;
 	
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)

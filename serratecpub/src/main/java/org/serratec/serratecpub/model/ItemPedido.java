@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class ItemPedido {
@@ -27,7 +28,7 @@ public class ItemPedido {
 	private Pedido pedido;
 	
 	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Produto produto;
 	
 	public Pedido getPedido() {
