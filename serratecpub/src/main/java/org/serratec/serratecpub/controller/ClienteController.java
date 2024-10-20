@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
@@ -31,6 +35,10 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Retorna cliente pelo id", description = "Dado um determinado id, será retornado o cliente")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+			@ApiResponse(responseCode = "200", description = "Cliente localizado!") })
     public ResponseEntity<ClienteDto> listarClientePorId(@PathVariable Long id){
         Optional<ClienteDto> dto = clienteService.obterClientePorId(id);
         if(dto.isPresent()){
@@ -46,6 +54,10 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Excluir cliente pelo id", description = "Dado um determinado id, será excluído o cliente")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+			@ApiResponse(responseCode = "200", description = "Cliente excluído!") })
     public ResponseEntity<String> excluirCliente(@PathVariable Long id){
         if(!clienteService.excluirCliente(id)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
@@ -54,6 +66,10 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Alterar cliente pelo id", description = "Dado um determinado id, será alterado o cliente")
+   	@ApiResponses(value = {
+   			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+   			@ApiResponse(responseCode = "200", description = "Cliente alterado!") })
     public ResponseEntity<ClienteDto> alterarCliente(@PathVariable Long id,
     @RequestBody ClienteDto clienteDto){
         Optional<ClienteDto> clienteAlterado = clienteService.alterarCliente(id, clienteDto);

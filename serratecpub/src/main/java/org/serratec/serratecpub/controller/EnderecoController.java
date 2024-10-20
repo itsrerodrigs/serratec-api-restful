@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("/enderecos")
 public class EnderecoController {
@@ -32,6 +36,10 @@ public class EnderecoController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Retornar endereço pelo id", description = "Dado um determinado id, será retronado o endereço do cliente")
+   	@ApiResponses(value = {
+   			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+   			@ApiResponse(responseCode = "200", description = "Endereço informado!") })
     public ResponseEntity<EnderecoDto> listarEnderecosPorId(@PathVariable Long id){
         Optional<EnderecoDto> enderecoDto = enderecoService.obterEnderecoPorId(id);
         if (enderecoDto.isPresent()){
@@ -47,6 +55,10 @@ public class EnderecoController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Excluir endereço pelo id", description = "Dado um determinado id, será excluído o endereço do cliente")
+   	@ApiResponses(value = {
+   			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+   			@ApiResponse(responseCode = "200", description = "Endereço excluído!") })
     public ResponseEntity<String> excluirEndereco(@PathVariable Long id){
         if (! enderecoService.excluirEndereco(id)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Endereco não encontrado!");
@@ -55,6 +67,10 @@ public class EnderecoController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Altera endereço pelo id", description = "Dado um determinado id, será alterado o endereço do cliente")
+   	@ApiResponses(value = {
+   			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+   			@ApiResponse(responseCode = "200", description = "Endereço alterado!") })
     public ResponseEntity<EnderecoDto> alterarEndereco(@PathVariable Long id, @RequestBody EnderecoDto enderecoDto){
         Optional<EnderecoDto> enderecoAlterado = enderecoService.alterarEndereco(id, enderecoDto);
         if (!enderecoAlterado.isPresent()){

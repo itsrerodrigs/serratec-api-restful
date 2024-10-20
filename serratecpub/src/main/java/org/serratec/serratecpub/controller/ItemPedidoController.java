@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("/itenspedidos")
 public class ItemPedidoController {
@@ -31,6 +35,10 @@ public class ItemPedidoController {
 	}
 
 	@GetMapping("/{id}")
+	@Operation(summary = "retornar item pedido pelo id", description = "Dado um determinado id, será retronado o item pedido do cliente")
+   	@ApiResponses(value = {
+   			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+   			@ApiResponse(responseCode = "200", description = "Item pedido informado!") })
 	public ResponseEntity<ItemPedidoDto> obterItensPedidosPorId(@PathVariable Long id) {
 		Optional<ItemPedidoDto> itemPedidoDto = itemPedidoService.obterItensPedidosPorId(id);
 		if (!itemPedidoDto.isPresent()) {
@@ -46,6 +54,10 @@ public class ItemPedidoController {
 	}
 
 	@DeleteMapping("/{id}")
+	@Operation(summary = "Deletar item pedido pelo id", description = "Dado um determinado id, será deletado o item pedido do cliente")
+   	@ApiResponses(value = {
+   			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+   			@ApiResponse(responseCode = "200", description = "Item pedido deletado!") })
 	public ResponseEntity<String> deletarItemPedido(@PathVariable Long id) {
 		if (!itemPedidoService.apagarItemPedido(id)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item pedido não encontrado!");
@@ -54,6 +66,10 @@ public class ItemPedidoController {
 	}
 
 	@PutMapping("/{id}")
+	@Operation(summary = "Alterar item pedido pelo id", description = "Dado um determinado id, será alterado o item pedido do cliente")
+   	@ApiResponses(value = {
+   			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+   			@ApiResponse(responseCode = "200", description = "Item pedido alterado!") })
 	public ResponseEntity<ItemPedidoDto> alterarItemPedido(@PathVariable Long id, @RequestBody ItemPedidoDto itemPedidoDto) {
 		Optional<ItemPedidoDto> itemPedidoAlterado = itemPedidoService.alterarItemPedido(id, itemPedidoDto);
 		if (!itemPedidoAlterado.isPresent()) {

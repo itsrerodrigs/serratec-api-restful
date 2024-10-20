@@ -18,19 +18,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
 
 	@Autowired
 	private ProdutoService produtoService;
-	
+
 	@GetMapping
 	public List<ProdutoDto> obterTodosProdutos() {
 		return produtoService.obterTodosProdutos();
 	}
 
 	@GetMapping("/{id}")
+	@Operation(summary = "Retornar o Pedido pelo Id", description = "Dado um determinado número de id, será retornado o pedido")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "404", description = "Não foi encontrado o pedido pelo id informado. Verifique!"),
+			@ApiResponse(responseCode = "200", description = "Pedido localizado!") })
 	public ResponseEntity<ProdutoDto> obterProdutoPorId(@PathVariable Long id) {
 		Optional<ProdutoDto> produtoDto = produtoService.obterProdutosPorId(id);
 		if (!produtoDto.isPresent()) {
@@ -46,6 +54,10 @@ public class ProdutoController {
 	}
 
 	@DeleteMapping("/{id}")
+	@Operation(summary = "Retornar o Pedido pelo Id", description = "Dado um determinado número de id, será retornado o pedido")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "404", description = "Não foi encontrado o pedido pelo id informado. Verifique!"),
+			@ApiResponse(responseCode = "200", description = "Pedido localizado!") })
 	public ResponseEntity<String> deletarProduto(@PathVariable Long id) {
 		if (!produtoService.apagarProduto(id)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado!");
@@ -54,6 +66,10 @@ public class ProdutoController {
 	}
 
 	@PutMapping("/{id}")
+	@Operation(summary = "Alterar o pedido pelo Id", description = "Dado um determinado número de id, será alterado o pedido")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "404", description = "Não foi encontrado o pedido pelo id informado. Verifique!"),
+			@ApiResponse(responseCode = "200", description = "Pedido alterado!") })
 	public ResponseEntity<ProdutoDto> alterarProduto(@PathVariable Long id, @RequestBody ProdutoDto produtoDto) {
 		Optional<ProdutoDto> produtoAlterado = produtoService.alterarProduto(id, produtoDto);
 		if (!produtoAlterado.isPresent()) {
