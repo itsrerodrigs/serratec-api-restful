@@ -39,10 +39,6 @@ public class ClienteService {
         clienteEntity = clienteRepository.save(clienteEntity);
         return ClienteDto.toDto(clienteEntity);
     }
-//    public ClienteDto salvarCliente(ClienteDto clienteDto){
-//        Cliente clienteEntity = clienteRepository.save(clienteDto.toEntity());
-//        return ClienteDto.toDto(clienteEntity);
-//    }
 
     public boolean excluirCliente(Long id){
         if (!clienteRepository.existsById(id)){
@@ -70,7 +66,6 @@ public class ClienteService {
                 endereco.setNumero(clienteDto.endereco().numero());
                 endereco.setComplemento(clienteDto.endereco().complemento());
 
-                // Salva o endereço no repositório
                 endereco = enderecoRepository.save(endereco);
                 clienteEntity.setEndereco(endereco);
             } else {
