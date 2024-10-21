@@ -7,7 +7,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +24,7 @@ public class Pedido {
 	private LocalDate dataEnvio;
 	private StatusPedido statusPedido;
 	private double valorTotal;
+	private Double valorTotalDesconto;
 	
 	@JsonBackReference
 	@ManyToOne(cascade= CascadeType.ALL)
@@ -100,5 +100,13 @@ public class Pedido {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	public Double getValorTotalDesconto() {
+	    return valorTotalDesconto;
+	}
+
+	public void setValorTotalDesconto(Double valorTotalDesconto) {
+	    this.valorTotalDesconto = valorTotalDesconto;
 	}
 }
