@@ -35,17 +35,7 @@ public class ClienteService {
    
     public ClienteDto salvarCliente(ClienteDto clienteDto) {
         Cliente clienteEntity = clienteDto.toEntity();
-        if (clienteDto.endereco() != null) {
-            Endereco endereco = viaCepService.preencherEnderecoComCep(clienteDto.endereco().cep());
-            if (endereco != null) {
-                endereco.setNumero(clienteDto.endereco().numero());
-                endereco.setComplemento(clienteDto.endereco().complemento());
-                endereco = enderecoRepository.save(endereco);
-                clienteEntity.setEndereco(endereco); 
-            } else {
-                throw new IllegalArgumentException("CEP inválido ou sem retorno de dados");
-            }
-        }
+        processarEndereco(clienteDto, clienteEntity);
         clienteEntity = clienteRepository.save(clienteEntity);
         return ClienteDto.toDto(clienteEntity);
     }
@@ -62,15 +52,30 @@ public class ClienteService {
         return true;
     }
 
-    public Optional<ClienteDto> alterarCliente(Long id, ClienteDto clienteDto){
-        if (!clienteRepository.existsById(id)){
-            return Optional.empty();
-        }
-        Cliente clienteEntity = clienteDto.toEntity();
-        clienteEntity.setId(id);
-        clienteRepository.save(clienteEntity);
-        return Optional.of(ClienteDto.toDto(clienteEntity));
+    public Optional<ClienteDto> alterarCliente(Long id, ClienteDto clienteDto) {
+        return clienteRepository.findById(id).map(clienteExistente -> {
+            clienteExistente.setNome(clienteDto.nome());
+            clienteExistente.setEmail(clienteDto.email());
+            clienteExistente.setTelefone(clienteDto.telefone());
+            processarEndereco(clienteDto, clienteExistente);
+            clienteRepository.save(clienteExistente);
+            return ClienteDto.toDto(clienteExistente);
+        });
     }
+    
+    private void processarEndereco(ClienteDto clienteDto, Cliente clienteEntity) {
+        if (clienteDto.endereco() != null) {
+            Endereco endereco = viaCepService.preencherEnderecoComCep(clienteDto.endereco().cep());
+            if (endereco != null) {
+                endereco.setNumero(clienteDto.endereco().numero());
+                endereco.setComplemento(clienteDto.endereco().complemento());
 
-
+                // Salva o endereço no repositório
+                endereco = enderecoRepository.save(endereco);
+                clienteEntity.setEndereco(endereco);
+            } else {
+                throw new IllegalArgumentException("CEP inválido ou sem retorno de dados");
+            }
+        }
+    }
 }

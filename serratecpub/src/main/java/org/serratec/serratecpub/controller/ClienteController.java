@@ -36,15 +36,13 @@ public class ClienteController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Retorna cliente pelo id", description = "Dado um determinado id, será retornado o cliente")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
-			@ApiResponse(responseCode = "200", description = "Cliente localizado!") })
-    public ResponseEntity<ClienteDto> listarClientePorId(@PathVariable Long id){
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "404", description = "Cliente não encontrado."),
+            @ApiResponse(responseCode = "200", description = "Cliente localizado!")
+    })
+    public ResponseEntity<ClienteDto> listarClientePorId(@PathVariable Long id) {
         Optional<ClienteDto> dto = clienteService.obterClientePorId(id);
-        if(dto.isPresent()){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(dto.get());
+        return dto.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
