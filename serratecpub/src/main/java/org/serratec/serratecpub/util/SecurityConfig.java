@@ -1,6 +1,5 @@
 package org.serratec.serratecpub.util;
 
-import org.springdoc.core.properties.SwaggerUiConfigProperties.Csrf;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -22,6 +21,8 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(authorize -> authorize
 			.requestMatchers(HttpMethod.GET, "/pedidos").permitAll()
+			.requestMatchers(HttpMethod.PUT, "/pedidos").permitAll()
+			.requestMatchers(HttpMethod.DELETE, "/pedidos").permitAll()
 			.requestMatchers(HttpMethod.POST, "/pedidos").hasRole("ADM"))
 			.httpBasic(Customizer.withDefaults())
 			.csrf(csrf -> csrf.disable());
