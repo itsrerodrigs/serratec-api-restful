@@ -17,19 +17,20 @@ import org.springframework.http.HttpMethod;
 @EnableWebSecurity
 public class SecurityConfig {
 	
+	
 	@Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(HttpMethod.GET, "/pedidos","/clientes","/produtos","/swagger-ui.html", "/swagger-ui/index.html").permitAll()
-            .requestMatchers("/swagger-ui.html", "/swagger-ui/index.html").permitAll()
-            .requestMatchers(HttpMethod.POST, "/pedidos","/clientes","/produtos").hasRole("ADM")
-            .requestMatchers(HttpMethod.DELETE, "/pedidos","/clientes","/produtos").hasRole("ADM")
-            .requestMatchers(HttpMethod.PUT, "/pedidos","/clientes","/produtos").hasRole("ADM")
-            .requestMatchers(HttpMethod.PATCH, "/pedidos","/clientes","/produtos").hasRole("ADM"))
-            .csrf(csrf -> csrf.disable())
-            .httpBasic(Customizer.withDefaults());
-        return http.build();
-    }
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests(authorize -> authorize
+			.requestMatchers(HttpMethod.GET, "/pedidos/**","/clientes/**","/produtos/**","/itempedido/**").permitAll()
+			.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v2/api-docs", "/webjars/**","/swagger-resources/**").permitAll()
+			.requestMatchers(HttpMethod.POST, "/pedidos","/clientes","/produtos","/itempedido").hasRole("ADM")
+			.requestMatchers(HttpMethod.DELETE, "/pedidos/**","/clientes/**","/produtos/**","/itempedido/**").hasRole("ADM")
+			.requestMatchers(HttpMethod.PUT, "/pedidos/**","/clientes/**","/produtos/**","/itempedido/**").hasRole("ADM")
+			.requestMatchers(HttpMethod.PATCH, "/pedidos/**","/clientes/**","/produtos/**","/itempedido/**").hasRole("ADM"))
+			.csrf(csrf -> csrf.disable())
+			.httpBasic(Customizer.withDefaults());
+		return http.build();
+	}
 	
 	@Bean
 	public InMemoryUserDetailsManager userdetalhes() {
@@ -40,7 +41,7 @@ public class SecurityConfig {
 		UserDetails usuario2 = User.builder()
 				.username("Gustavo")
 				.password(encoder().encode("teste"))
-				.roles("RH").build();
+				.roles("ADM").build();
 		return new InMemoryUserDetailsManager(usuario1, usuario2);
 	}
 	
