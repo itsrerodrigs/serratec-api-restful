@@ -18,16 +18,18 @@ import org.springframework.http.HttpMethod;
 public class SecurityConfig {
 	
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(authorize -> authorize
-			.requestMatchers(HttpMethod.GET, "/pedidos").permitAll()
-			.requestMatchers(HttpMethod.PUT, "/pedidos").permitAll()
-			.requestMatchers(HttpMethod.DELETE, "/pedidos").permitAll()
-			.requestMatchers(HttpMethod.POST, "/pedidos").hasRole("ADM"))
-			.httpBasic(Customizer.withDefaults())
-			.csrf(csrf -> csrf.disable());
-		return http.build();
-	}
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authorize -> authorize
+            .requestMatchers(HttpMethod.GET, "/pedidos","/clientes","/produtos","/swagger-ui.html", "/swagger-ui/index.html").permitAll()
+            .requestMatchers("/swagger-ui.html", "/swagger-ui/index.html").permitAll()
+            .requestMatchers(HttpMethod.POST, "/pedidos","/clientes","/produtos").hasRole("ADM")
+            .requestMatchers(HttpMethod.DELETE, "/pedidos","/clientes","/produtos").hasRole("ADM")
+            .requestMatchers(HttpMethod.PUT, "/pedidos","/clientes","/produtos").hasRole("ADM")
+            .requestMatchers(HttpMethod.PATCH, "/pedidos","/clientes","/produtos").hasRole("ADM"))
+            .csrf(csrf -> csrf.disable())
+            .httpBasic(Customizer.withDefaults());
+        return http.build();
+    }
 	
 	@Bean
 	public InMemoryUserDetailsManager userdetalhes() {
