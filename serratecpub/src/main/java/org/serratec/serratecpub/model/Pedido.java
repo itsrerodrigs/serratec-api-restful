@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.serratec.serratecpub.util.VerificaCpf;
+import org.serratec.serratecpub.util.TratamentoDeErro;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -124,7 +124,7 @@ public class Pedido {
                 + " | Data do Pedido: " + dataPedido 
                 + "\nStatus do Pedido: " + statusPedido
                 + "\n\nCliente: " + cliente.getNome() 
-                + "\nCPF: " + VerificaCpf.formataCpf(cliente.getCpf())
+                + "\nCPF: " + TratamentoDeErro.formataCpf(cliente.getCpf())
                 + "\n\nItens do Pedido: " + itemPedido.toString()
                 + "\n\nValor Total do Pedido: R$" + df.format(valorTotal);
     }

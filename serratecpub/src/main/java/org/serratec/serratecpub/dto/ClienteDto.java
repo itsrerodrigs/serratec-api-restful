@@ -3,15 +3,11 @@ package org.serratec.serratecpub.dto;
 import java.time.LocalDate;
 
 import org.serratec.serratecpub.model.Cliente;
-import org.serratec.serratecpub.util.VerificaCpf;
 
 public record ClienteDto(Long id, String nome, String cpf, LocalDate dataNascimento, String email,  String telefone,
 		EnderecoDto endereco) {
 
 	public Cliente toEntity() {
-		if (this.cpf == null || !VerificaCpf.isCPF(this.cpf)) {
-            throw new IllegalArgumentException("O CPF é inválido");
-        }
 		Cliente cliente = new Cliente();
 		cliente.setId(this.id);
 		cliente.setNome(this.nome);
