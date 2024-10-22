@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.serratec.serratecpub.dto.ItemPedidoDto;
+import org.serratec.serratecpub.model.ItemPedido;
 import org.serratec.serratecpub.service.ItemPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,11 @@ public class ItemPedidoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
 			@ApiResponse(responseCode = "404", description = "Não encontramos sua lista de pedidos. Tente novamente!")
 			})
-	public List<ItemPedidoDto> obterTodosItensPedidos() {
-		return itemPedidoService.obterTodosItensPedidos();
+	public ResponseEntity<?> obterTodosItensPedidos() {
+		if(itemPedidoService.obterTodosItensPedidos().isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Lista de itens pedido vazia!");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(itemPedidoService.obterTodosItensPedidos());
 	}
 
 	@GetMapping("/{id}")
@@ -48,10 +52,10 @@ public class ItemPedidoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
    			@ApiResponse(responseCode = "404", description = "Não encontrado!")
    			})
-	public ResponseEntity<ItemPedidoDto> obterItensPedidosPorId(@PathVariable Long id) {
+	public ResponseEntity<?> obterItensPedidosPorId(@PathVariable Long id) {
 		Optional<ItemPedidoDto> itemPedidoDto = itemPedidoService.obterItensPedidosPorId(id);
 		if (!itemPedidoDto.isPresent()) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Não existe item pedido com o id informado!");
 		}
 		return ResponseEntity.ok(itemPedidoDto.get());
 	}
