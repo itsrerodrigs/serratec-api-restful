@@ -109,7 +109,7 @@ public class PedidoController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido não encontrado!");
 		}
 		return ResponseEntity.ok("Pedido excluído com sucesso");
-
+	}
 	@PutMapping("/{id}")
 	@Operation(summary = "Alterar pedido pelo id", description = "Dado um determinado id, será alterado o pedido do cliente")
 	@ApiResponses(value = {
@@ -123,3 +123,5 @@ public class PedidoController {
 		}
 		return ResponseEntity.ok(pedidoAlterado.get());
 }
+	}
+	

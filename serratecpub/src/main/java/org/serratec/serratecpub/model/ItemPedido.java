@@ -22,7 +22,6 @@ public class ItemPedido {
 	private Double valorLiquido;
 	private Double valorDesconto;
 	
-	//adicionar CascadeType.ALL caso esta vire a classe pai
 	@JsonBackReference
 	@ManyToOne
 	private Pedido pedido;
@@ -31,9 +30,6 @@ public class ItemPedido {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Produto produto;
 	
-//	public Pedido getPedido() {
-//		return pedido;
-//	}
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}

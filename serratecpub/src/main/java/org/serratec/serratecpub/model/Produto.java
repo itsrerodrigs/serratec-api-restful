@@ -40,15 +40,15 @@ public class Produto {
 	private String descricao;
 	
 
-	//@Positive
+	@Positive
 	private int qtdEstoque;
 	
-	//@NotNull
-	//@JsonFormat(pattern = "dd/MM/yyyy")
-	private LocalDate dataCadastro = LocalDate.now();//data de cadastro vai automaticamente
+	@NotNull
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataCadastro = LocalDate.now();
 	
 	
-	//@Positive
+	@Positive
 	private Double valorUnitario;
 	
 	@Size(min = 1, max = 500, message = TratamentoDeErro.SizeMessage)
