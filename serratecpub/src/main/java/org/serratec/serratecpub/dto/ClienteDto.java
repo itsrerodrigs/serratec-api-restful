@@ -3,6 +3,7 @@ package org.serratec.serratecpub.dto;
 import java.time.LocalDate;
 
 import org.serratec.serratecpub.model.Cliente;
+import org.serratec.serratecpub.util.VerificaCpf;
 
 public record ClienteDto(Long id, String email, String cpf, String nome, String telefone, LocalDate dataNascimento,
 		EnderecoDto endereco) {

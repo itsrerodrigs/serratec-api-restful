@@ -12,7 +12,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -24,19 +26,20 @@ public class Cliente {
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	private String nome;
 	
+	@Email
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 5, max = 100)
 	private String email;
 	
-//	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
-	//@Size(min=11,max=11, message="Somente numeros no CPF")
-	
-	
+
+	@Size(min=11,max=11, message="Somente numeros no CPF")
 	private String cpf;
 	
-	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
+	@NotBlank(message = TratamentoDeErro.NotBlankMessage) 
+	@Size(min=11,max=11, message="Telefone deve ter entre 10 e 11 digitos")
 	private String telefone;
 	
+	@PastOrPresent(message = "A data de nascimento deve ser no passado ou presente")
 	private LocalDate dataNascimento;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -101,4 +104,11 @@ public class Cliente {
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+
+	@Override
+	public String toString() {
+		return "Cliente id=" + id + ", nome=" + nome + ", email=" + email + ", cpf=" + cpf + ", telefone=" + telefone
+				+ ", dataNascimento=" + dataNascimento + ", endereco=" + endereco ;
+	}
+	
 }

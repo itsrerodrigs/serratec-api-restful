@@ -130,3 +130,5 @@ public class PedidoController {
 		return ResponseEntity.ok(pedidoAlterado.get());
 	}
 }
+	}
+	

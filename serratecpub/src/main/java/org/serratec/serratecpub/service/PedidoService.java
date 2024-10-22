@@ -26,6 +26,9 @@ public class PedidoService {
     @Autowired
     private EnderecoUtil enderecoUtil;
     
+    @Autowired
+    private EmailService email;
+    
 	public List<PedidoDto> obterTodosPedidos() {
         return pedidoRepository.findAll().stream().map(PedidoDto::toDto).toList();
 	}
@@ -56,6 +59,7 @@ public class PedidoService {
         }
         pedidoEntity.setValorTotal(pedidoDto.valorTd(pedidoEntity));
         pedidoEntity = pedidoRepository.save(pedidoEntity);
+        email.enviarEmail(pedidoEntity.getCliente().getEmail(), "Pedido Realizado com sucesso", pedidoEntity.toString());
         return PedidoDto.toDto(pedidoEntity);
     }
 

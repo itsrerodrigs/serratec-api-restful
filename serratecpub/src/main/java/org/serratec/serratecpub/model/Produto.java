@@ -28,7 +28,7 @@ public class Produto {
 	private Long id;
 	
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
-	@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
+	@Size(min = 2, max = 50, message = TratamentoDeErro.SizeMessage)
 	private String nome;
 	
 	@NotNull
@@ -40,15 +40,14 @@ public class Produto {
 	private String descricao;
 	
 
-	//@Positive
+	@Positive
 	private int qtdEstoque;
 	
-	//@NotNull
-	//@JsonFormat(pattern = "dd/MM/yyyy")
-	private LocalDate dataCadastro = LocalDate.now();//data de cadastro vai automaticamente
+	@NotNull
+	private LocalDate dataCadastro;
 	
 	
-	//@Positive
+	@Positive
 	private Double valorUnitario;
 	
 	@Size(min = 1, max = 500, message = TratamentoDeErro.SizeMessage)
@@ -119,4 +118,13 @@ public class Produto {
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
 	}
+
+	@Override
+	public String toString() {
+		return "\nCodigo: " + id + "\nNome: " + nome + "\nCategoria: " + categoria + "\nDescricao: " + descricao
+				+ "\nEstoque: " + qtdEstoque + "\nData Cadastro: " + dataCadastro + "\nValor Unitario: R$" + valorUnitario
+				+ "\nImagem: " + imagem;
+	}
+	
+	
 }

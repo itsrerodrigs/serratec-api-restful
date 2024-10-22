@@ -10,19 +10,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
+import jakarta.validation.constraints.Positive;
+
 @Entity
 public class ItemPedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Positive
 	private int quantidade;
 	private Double precoVenda;
+	@Positive
 	private int percentualDesconto;
 	private double valorBruto;
 	private Double valorLiquido;
 	private Double valorDesconto;
 	
-	//adicionar CascadeType.ALL caso esta vire a classe pai
 	@JsonBackReference
 	@ManyToOne
 	private Pedido pedido;
@@ -31,9 +34,6 @@ public class ItemPedido {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Produto produto;
 	
-//	public Pedido getPedido() {
-//		return pedido;
-//	}
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
@@ -83,7 +83,7 @@ public class ItemPedido {
 	}
 
 	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
+	    this.quantidade = quantidade;
 	}
 
 	public void setPercentualDesconto(int percentualDesconto) {
@@ -107,4 +107,12 @@ public class ItemPedido {
         this.valorDesconto = this.valorBruto * (this.percentualDesconto / 100.0);
         this.valorLiquido = this.valorBruto - this.valorDesconto;
    }
+
+	@Override
+	public String toString() {
+		return "\nQuantidade: " + quantidade + "\nValor de venda: R$" + precoVenda
+				+ "\nDesconto: " + percentualDesconto + "%\nValor Bruto: R$" + valorBruto + "\nValor Liquido: R$"
+				+ valorLiquido + "\nValor de Desconto: R$" + valorDesconto + "\nProdutos: " + produto.toString();
+	}
+	
 }
