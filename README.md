@@ -25,21 +25,21 @@ Esta API é o **Projeto Final da disciplina API RESTful** do programa de Residê
 - `/produtos` - Cadastro e gerenciamento de produtos.
 - `/pedidos` - Gerenciamento de pedidos e seus itens.
 - `/itenspedidos` - Detalhes e consultas dos itens pedidos.
-- `/cep` - Busca de CEP via API externa (Via Cep).
 
 ## 📦 Como rodar o projeto localmente
 
 ### Pré-requisitos
 
 - Java 17 instalado
+- Eclipse IDE
 - PostgreSQL instalado e configurado
-- Maven
+- Postman
 
 ### Passos
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seu-usuario/ecommerce-serratec-pub.git
+   git clone https://github.com/seu-usuario/ecommerce-serratec-pub.git ecommerce-serratec-pub
    ```
 
 2. Navegue até o diretório do projeto:
