@@ -44,10 +44,6 @@ public class Produto {
 	@Positive
 	private Double valorUnitario;
 	
-	@Size(min = 1, max = 500, message = TratamentoDeErro.SizeMessage)
-	private String imagem;
-	
-	
 	
 	public Long getId() {
 		return id;
@@ -77,9 +73,6 @@ public class Produto {
 		return valorUnitario;
 	}
 
-	public String getImagem() {
-		return imagem;
-	}
 
 	public void setId(Long id) {
 		this.id = id;
@@ -109,14 +102,12 @@ public class Produto {
 		this.valorUnitario = valorUnitario;
 	}
 
-	public void setImagem(String imagem) {
-		this.imagem = imagem;
-	}
-
 	@Override
 	public String toString() {
-		return "\nCodigo: " + id + "\nNome: " + nome + "\nCategoria: " + categoria + "\nDescricao: " + descricao
-				+ "\nEstoque: " + qtdEstoque + "\nData Cadastro: " + dataCadastro + "\nValor Unitario: R$" + valorUnitario
-				+ "\nImagem: " + imagem;
+		return "\nCodigo: " + id 
+				+ "\nNome: " + nome 
+				+ "\nCategoria: " + categoria 
+				+ "\nDescricao: " + descricao
+				+ "\nValor Unitario: R$" + valorUnitario;
 	}	
 }

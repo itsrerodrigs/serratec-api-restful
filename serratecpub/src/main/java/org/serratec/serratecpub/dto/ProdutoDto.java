@@ -11,8 +11,8 @@ public record ProdutoDto(Long id,
 		String descricao,
 		LocalDate dataCadastro,
 		int qtdEstoque,
-		Double valorUnitario,
-		String imagem) {
+		Double valorUnitario
+		) {
 
 	public Produto toEntity() {
 		Produto produto = new Produto();
@@ -23,12 +23,11 @@ public record ProdutoDto(Long id,
 		produto.setDataCadastro(this.dataCadastro);
 		produto.setQtdEstoque(this.qtdEstoque);
 		produto.setValorUnitario(this.valorUnitario);
-		produto.setImagem(this.imagem);
 		return produto;
 	}
 
 	public static ProdutoDto toDto(Produto produto) {
 		return new ProdutoDto(produto.getId(), produto.getNome(), produto.getCategoria(), produto.getDescricao(),
-				produto.getDataCadastro(), produto.getQtdEstoque(), produto.getValorUnitario(), produto.getImagem());
+				produto.getDataCadastro(), produto.getQtdEstoque(), produto.getValorUnitario());
 	}
 }

@@ -110,9 +110,13 @@ public class ItemPedido {
 
 	@Override
 	public String toString() {
-		return "\nQuantidade: " + quantidade + "\nValor de venda: R$" + precoVenda
-				+ "\nDesconto: " + percentualDesconto + "%\nValor Bruto: R$" + valorBruto + "\nValor Liquido: R$"
-				+ valorLiquido + "\nValor de Desconto: R$" + valorDesconto + "\nProdutos: " + produto.toString();
+		return "\nQuantidade: " + quantidade 
+				+ "\nValor de venda: R$ " + precoVenda
+				+ "\nDesconto: " + percentualDesconto 
+				+ "%\nValor Bruto: R$ " + valorBruto 
+				+ "\nValor Liquido: R$ " + valorLiquido 
+				+ "\nValor de Desconto: R$" + valorDesconto 
+				+ "\nProdutos: " + produto.toString();
 	}
 	
 }
