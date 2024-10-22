@@ -38,7 +38,7 @@ public class ProdutoController {
 			})
 	public ResponseEntity<?> obterTodosProdutos() {
 		if(produtoService.obterTodosProdutos().isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Lista de prodoutos vazia!");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista de prodoutos vazia!");
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(produtoService.obterTodosProdutos());
 	}
@@ -54,12 +54,12 @@ public class ProdutoController {
 	public ResponseEntity<?> obterProdutoPorId(@PathVariable Long id) {
 		Optional<ProdutoDto> produtoDto = produtoService.obterProdutosPorId(id);
 		if (!produtoDto.isPresent()) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("O produto com id informado não foi encontrado");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O produto com id informado não foi encontrado!");
 		}
-		return ResponseEntity.ok(produtoDto.get());
+		return ResponseEntity.status(HttpStatus.OK).body(produtoDto.get());
 	}
 	
-	@GetMapping("/{nome}")
+	@GetMapping("cadastros/{nome}")
 	@Operation(summary = "Retornar o produto pelo nome", description = "Dado um determinado nome, será retornado o produto")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Produto localizado!"),

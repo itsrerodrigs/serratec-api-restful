@@ -39,7 +39,7 @@ public class PedidoController {
 			@ApiResponse(responseCode = "404", description = "Nenhum pedido encontrado!")})
 	public ResponseEntity<?> obterTodosPedidos() {
 		if(pedidoService.obterTodosPedidos().isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Nenhum pedido cadastrado!");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum pedido cadastrado!");
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.obterTodosPedidos());
 	}
