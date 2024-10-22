@@ -1,5 +1,6 @@
 package org.serratec.serratecpub.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.serratec.serratecpub.dto.RelatorioPedidoDto;
 import org.serratec.serratecpub.model.ItemPedido;
 import org.serratec.serratecpub.model.Pedido;
 import org.serratec.serratecpub.model.Produto;
+import org.serratec.serratecpub.model.StatusPedido;
 import org.serratec.serratecpub.repository.PedidoRepository;
 import org.serratec.serratecpub.repository.ProdutoRepository;
 import org.serratec.serratecpub.util.EnderecoUtil;
@@ -32,15 +34,26 @@ public class PedidoService {
 	public List<PedidoDto> obterTodosPedidos() {
         return pedidoRepository.findAll().stream().map(PedidoDto::toDto).toList();
 	}
+	
     public Optional<PedidoDto> obterPedidosPorId(Long id) {
 		if (!pedidoRepository.existsById(id)) {
 			return Optional.empty();
 		}
 		return Optional.of(PedidoDto.toDto(pedidoRepository.findById(id).get()));
     }
+    
     public List<PedidoDto> obterPedidosPorNomeCliente(String nome) {
     	return pedidoRepository.BuscarPedidoPorNomeCliente(nome).stream().map(PedidoDto::toDto).toList();
     }
+    
+	public List<PedidoDto> obterPorData(LocalDate data) {
+		return pedidoRepository.findByDataPedido(data).stream().map(PedidoDto::toDto).toList();
+	}
+	
+	public List<PedidoDto> obterPorStatus(StatusPedido status) {
+		return pedidoRepository.findByStatusPedido(status).stream().map(PedidoDto::toDto).toList();
+	}
+    
     public Optional<RelatorioPedidoDto> obterRelatorioPedido(Long id) {
 		  Optional<Pedido> pedido = pedidoRepository.findById(id);
 		  if (pedido.isPresent()) {

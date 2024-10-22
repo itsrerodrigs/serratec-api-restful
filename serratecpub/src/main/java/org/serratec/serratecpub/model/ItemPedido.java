@@ -1,5 +1,7 @@
 package org.serratec.serratecpub.model;
 
+import java.text.DecimalFormat;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
@@ -9,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-
 import jakarta.validation.constraints.Positive;
 
 @Entity
@@ -41,14 +42,15 @@ public class ItemPedido {
 	public Produto getProduto() {
 		return produto;
 	}
+	
 	public void setPrecoVenda(Double precoVenda) {
         this.precoVenda = precoVenda;
     }
+	
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 		setPrecoVenda(produto.getValorUnitario()*2);
 	}
-	
 	
 	public Long getId() {
 		return id;
@@ -110,13 +112,13 @@ public class ItemPedido {
 
 	@Override
 	public String toString() {
-		return "\nQuantidade: " + quantidade 
-				+ "\nValor de venda: R$ " + precoVenda
-				+ "\nDesconto: " + percentualDesconto 
-				+ "%\nValor Bruto: R$ " + valorBruto 
-				+ "\nValor Liquido: R$ " + valorLiquido 
-				+ "\nValor de Desconto: R$" + valorDesconto 
-				+ "\nProdutos: " + produto.toString();
+		 DecimalFormat df = new DecimalFormat("0.00");
+		return "\n\nQuantidade: " + quantidade 
+				+ "\nValor de venda: R$ " + df.format(precoVenda)
+				+ "\nPorcentagem de Desconto: " + percentualDesconto + "%"
+				+ "\nValor Bruto: R$ " + df.format(valorBruto)
+				+ "\nValor Liquido: R$ " + df.format(valorLiquido)
+				+ "\nValor do Desconto: R$" + df.format(valorDesconto)
+				+ "\nProduto: " + produto.toString();
 	}
-	
 }

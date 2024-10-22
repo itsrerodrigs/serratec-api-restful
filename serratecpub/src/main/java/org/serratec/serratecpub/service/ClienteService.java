@@ -28,7 +28,6 @@ public class ClienteService {
         return Optional.of(ClienteDto.toDto(clienteRepository.findById(id).get()));
     }
     
-   
     public ClienteDto salvarCliente(ClienteDto clienteDto) {
         Cliente clienteEntity = clienteDto.toEntity();
         enderecoUtil.processarEndereco(clienteDto, clienteEntity);

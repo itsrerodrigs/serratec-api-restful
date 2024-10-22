@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 
 @Configuration
 @OpenAPIDefinition(info = @Info(
-		title = "API para gestão do Ecoommerce de um Pub!",
+		title = "API para gestão do Ecommerce de um PUB!",
 		version = "1.0",
 		description = "Documentação da API SerratecPub."
 		))
