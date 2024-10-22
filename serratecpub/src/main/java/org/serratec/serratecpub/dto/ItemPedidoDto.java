@@ -1,9 +1,6 @@
 package org.serratec.serratecpub.dto;
 
 import org.serratec.serratecpub.model.ItemPedido;
-import org.serratec.serratecpub.model.Pedido;
-import org.serratec.serratecpub.repository.PedidoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public record ItemPedidoDto(
 		Long id,

@@ -29,7 +29,6 @@ public class PedidoService {
     @Autowired
     private EmailService email;
     
-    
 	public List<PedidoDto> obterTodosPedidos() {
         return pedidoRepository.findAll().stream().map(PedidoDto::toDto).toList();
 	}
