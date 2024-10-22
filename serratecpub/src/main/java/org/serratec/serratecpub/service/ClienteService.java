@@ -5,10 +5,8 @@ import java.util.Optional;
 
 import org.serratec.serratecpub.dto.ClienteDto;
 import org.serratec.serratecpub.model.Cliente;
-import org.serratec.serratecpub.model.Endereco;
-import org.serratec.serratecpub.model.ViaCepService;
 import org.serratec.serratecpub.repository.ClienteRepository;
-import org.serratec.serratecpub.repository.EnderecoRepository;
+import org.serratec.serratecpub.util.EnderecoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +15,7 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
     @Autowired
-    private EnderecoRepository enderecoRepository;
-    @Autowired
-    private ViaCepService  viaCepService;
+    private EnderecoUtil enderecoUtil;
     
     public List<ClienteDto> obterTodosClientes(){
         return clienteRepository.findAll().stream().map(c -> ClienteDto.toDto(c)).toList();
@@ -35,14 +31,10 @@ public class ClienteService {
    
     public ClienteDto salvarCliente(ClienteDto clienteDto) {
         Cliente clienteEntity = clienteDto.toEntity();
-        processarEndereco(clienteDto, clienteEntity);
+        enderecoUtil.processarEndereco(clienteDto, clienteEntity);
         clienteEntity = clienteRepository.save(clienteEntity);
         return ClienteDto.toDto(clienteEntity);
     }
-//    public ClienteDto salvarCliente(ClienteDto clienteDto){
-//        Cliente clienteEntity = clienteRepository.save(clienteDto.toEntity());
-//        return ClienteDto.toDto(clienteEntity);
-//    }
 
     public boolean excluirCliente(Long id){
         if (!clienteRepository.existsById(id)){
@@ -57,25 +49,9 @@ public class ClienteService {
             clienteExistente.setNome(clienteDto.nome());
             clienteExistente.setEmail(clienteDto.email());
             clienteExistente.setTelefone(clienteDto.telefone());
-            processarEndereco(clienteDto, clienteExistente);
+            enderecoUtil.processarEndereco(clienteDto, clienteExistente);
             clienteRepository.save(clienteExistente);
             return ClienteDto.toDto(clienteExistente);
         });
-    }
-    
-    private void processarEndereco(ClienteDto clienteDto, Cliente clienteEntity) {
-        if (clienteDto.endereco() != null) {
-            Endereco endereco = viaCepService.preencherEnderecoComCep(clienteDto.endereco().cep());
-            if (endereco != null) {
-                endereco.setNumero(clienteDto.endereco().numero());
-                endereco.setComplemento(clienteDto.endereco().complemento());
-
-                // Salva o endereço no repositório
-                endereco = enderecoRepository.save(endereco);
-                clienteEntity.setEndereco(endereco);
-            } else {
-                throw new IllegalArgumentException("CEP inválido ou sem retorno de dados");
-            }
-        }
     }
 }

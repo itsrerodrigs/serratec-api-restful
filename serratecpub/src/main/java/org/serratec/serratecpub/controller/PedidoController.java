@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.serratec.serratecpub.dto.PedidoDto;
+import org.serratec.serratecpub.dto.RelatorioPedidoDto;
 import org.serratec.serratecpub.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,7 @@ public class PedidoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDto);
 		//return ResponseEntity.ok(pedidoDto.get());
 	}
+
 	
 	@GetMapping("/cliente/{nome}")
 	@Operation(summary = "Retornar cliente pelo nome", description = "Dado um determinado nome, será retornado o cliente")
@@ -68,10 +70,20 @@ public class PedidoController {
 		return pedidoService.obterPedidosPorNomeCliente(nome);
 	}
 	
-//	@GetMapping("relatorio/{id}")
-//	public List<PedidoDto> relatorio(@PathVariable Long id){
-//		return pedidoService.relatorioPedido(id);
-//	}
+	@GetMapping("/relatorio/{id}")
+	@Operation(summary = "Imprimir relatório do pedido pelo id", description = "Dado um determinado id, será impresso o relatório do pedido")
+	@ApiResponses(value = {
+	  @ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não existem pedidos com este id. Verifique!"),
+	  @ApiResponse(responseCode = "200", description = "Relatório gerado com sucesso!") })
+	public ResponseEntity<String> imprimirRelatorioPedido(@PathVariable Long id) {
+	  Optional<RelatorioPedidoDto> relatorioPedidoDto = pedidoService.obterRelatorioPedido(id);
+	  if (!relatorioPedidoDto.isPresent()) {
+	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido não encontrado!");
+	  }
+	  String relatorio = relatorioPedidoDto.get().gerarRelatorio();
+	  System.out.println(relatorio);
+	  return ResponseEntity.ok(relatorio);
+	}
 	
 	
 	@PostMapping
@@ -87,7 +99,7 @@ public class PedidoController {
 	}
 
 	@DeleteMapping("/{id}")
-	@Operation(summary = "Deletar cliente pelo id", description = "Dado um determinado id, será deletado o cliente")
+	@Operation(summary = "Deletar pedido pelo id", description = "Dado um determinado id, será deletado o pedido do cliente")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
 			@ApiResponse(responseCode = "200", description = "Cliente deletado!") })
@@ -97,7 +109,6 @@ public class PedidoController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido não encontrado!");
 		}
 		return ResponseEntity.ok("Pedido excluído com sucesso");
-	}
 
 	@PutMapping("/{id}")
 	@Operation(summary = "Alterar pedido pelo id", description = "Dado um determinado id, será alterado o pedido do cliente")
@@ -111,6 +122,4 @@ public class PedidoController {
 			return ResponseEntity.status(403).body("Erro");
 		}
 		return ResponseEntity.ok(pedidoAlterado.get());
-	}
-
 }

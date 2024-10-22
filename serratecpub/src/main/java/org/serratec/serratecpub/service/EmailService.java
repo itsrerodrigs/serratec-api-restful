@@ -19,11 +19,9 @@ public class EmailService {
 		enviaMensagem.setText(mensagem);
 		try {
 			sender.send(enviaMensagem);
-			
-			return "Email enviado com sucesso";
+			return "Email enviado com sucesso!";
 		}catch(Exception e) {
 			return "Erro ao enviar mensagem. Verifique!";
 		}
-		
 	}
 }
