@@ -20,7 +20,7 @@ public class EmailService {
 		try {
 			sender.send(enviaMensagem);
 			
-			return "Emaqil enviado com sucesso";
+			return "Email enviado com sucesso!";
 		}catch(Exception e) {
 			return "Erro ao enviar mensagem. Verifique!";
 		}
