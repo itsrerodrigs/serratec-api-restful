@@ -32,28 +32,28 @@ public class PedidoController {
 	
 	@GetMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	@Operation(summary = "Retorna lista de pedido", description = "Dado um determinado id, será retornado o pedido")
+	@Operation(summary = "Retornar lista de pedidos", description = "Dado um determinado id, será retornado o pedido")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Pedido localizado!"),
 			
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
-			@ApiResponse(responseCode = "404", description = "Cliente nao encontrado!")})
+			@ApiResponse(responseCode = "404", description = "Pedido nao encontrado!")})
 	public List<PedidoDto> obterTodosPedidos() {
 		return pedidoService.obterTodosPedidos();
 	}
 
 	@GetMapping("/{id}")
-	@Operation(summary = "Retorna o pedido pelo id", description = "Dado um determinado id, será retornado o pedido")
+	@Operation(summary = "Retornar o pedido pelo id", description = "Dado um determinado id, será retornado o pedido")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Pedido localizado!"), 
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
-			@ApiResponse(responseCode = "404", description = "Id nao encontrado!")})
+			@ApiResponse(responseCode = "404", description = "Id não encontrado!")})
 	public ResponseEntity<?> obterPedidosPorId(@PathVariable Long id) {
 		Optional<PedidoDto> pedidoDto = pedidoService.obterPedidosPorId(id);
 		if (!pedidoDto.isPresent()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro Id nao encontrado");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro! Id do pedido não encontrado");
 		}
 		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDto);
 	}
@@ -62,7 +62,7 @@ public class PedidoController {
 	@GetMapping("/cliente/{nome}")
 	@Operation(summary = "Retornar cliente pelo nome", description = "Dado um determinado nome, será retornado o cliente")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Caso a lista esteja vazia é porque não tem cliente com esse nome. Verifique!"),
+			@ApiResponse(responseCode = "200", description = "Caso a lista esteja vazia, é porque não existe cliente com esse nome. Verifique!"),
 			@ApiResponse(responseCode = "200", description = "Pedido localizado!"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
 			@ApiResponse(responseCode = "404", description = "Nome de cliente não encontrado!") })
@@ -71,7 +71,7 @@ public class PedidoController {
 	}
 	
 	@GetMapping("/relatorio/{id}")
-	@Operation(summary = "Imprimir relatório do pedido pelo id", description = "Dado um determinado id, será impresso o relatório do pedido")
+	@Operation(summary = "Obter relatório do pedido pelo id", description = "Dado um determinado id, o relatório do pedido será gerado!")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Pedido localizado!"), 
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
@@ -130,5 +130,3 @@ public class PedidoController {
 		return ResponseEntity.ok(pedidoAlterado.get());
 	}
 }
-	}
-	

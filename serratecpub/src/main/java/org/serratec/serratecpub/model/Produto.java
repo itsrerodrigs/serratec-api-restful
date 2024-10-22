@@ -1,12 +1,7 @@
 package org.serratec.serratecpub.model;
 
 import java.time.LocalDate;
-import java.util.List;
-
 import org.serratec.serratecpub.util.TratamentoDeErro;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,7 +9,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -124,7 +118,5 @@ public class Produto {
 		return "\nCodigo: " + id + "\nNome: " + nome + "\nCategoria: " + categoria + "\nDescricao: " + descricao
 				+ "\nEstoque: " + qtdEstoque + "\nData Cadastro: " + dataCadastro + "\nValor Unitario: R$" + valorUnitario
 				+ "\nImagem: " + imagem;
-	}
-	
-	
+	}	
 }

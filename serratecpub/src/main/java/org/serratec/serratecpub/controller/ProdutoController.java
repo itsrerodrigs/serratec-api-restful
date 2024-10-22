@@ -30,24 +30,24 @@ public class ProdutoController {
 	private ProdutoService produtoService;
 
 	@GetMapping
-	@Operation(summary = "Retornar o Pedido pelo Id", description = "Dado um determinado número de id, será retornado o pedido")
+	@Operation(summary = "Retornar o produto pelo Id", description = "Dado um determinado número de id, será retornado o produto")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Produtos localizado!"),
+			@ApiResponse(responseCode = "200", description = "Produto localizado!"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
-			@ApiResponse(responseCode = "404", description = "Não foi encontrado o id informado. Verifique!")
+			@ApiResponse(responseCode = "404", description = "Não foi encontrado um cadastro de produto no id informado. Verifique!")
 			})
 	public List<ProdutoDto> obterTodosProdutos() {
 		return produtoService.obterTodosProdutos();
 	}
 
 	@GetMapping("/{id}")
-	@Operation(summary = "Retornar o Pedido pelo Id", description = "Dado um determinado número de id, será retornado o pedido")
+	@Operation(summary = "Retornar o produto pelo Id", description = "Dado um determinado número de id, será retornado o produto")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Produto localizado!"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
-			@ApiResponse(responseCode = "404", description = "Não foi encontrado o id informado. Verifique!")
+			@ApiResponse(responseCode = "404", description = "Não foi encontrado um cadastro de produto no id informado. Verifique!")
 			})
 	public ResponseEntity<ProdutoDto> obterProdutoPorId(@PathVariable Long id) {
 		Optional<ProdutoDto> produtoDto = produtoService.obterProdutosPorId(id);
@@ -59,24 +59,24 @@ public class ProdutoController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	@Operation(summary = "Retornar o Pedido pelo Id", description = "Dado um determinado número de id, será retornado o pedido")
+	@Operation(summary = "Retornar o produto pelo Id", description = "Dado um determinado número de id, será retornado o pedido")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Produto cadastrado!"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
-			@ApiResponse(responseCode = "404", description = "Não foi encontrado o id informado. Verifique!")
+			@ApiResponse(responseCode = "404", description = "Não foi encontrado um cadastro de produto no id informado. Verifique!")
 			})
 	public ProdutoDto cadastrarProduto(@RequestBody ProdutoDto produtoDto) {
 		return produtoService.salvarProduto(produtoDto);
 	}
 
 	@DeleteMapping("/{id}")
-	@Operation(summary = "Retornar o Pedido pelo Id", description = "Dado um determinado número de id, será retornado o pedido")
+	@Operation(summary = "Retornar o produto pelo Id", description = "Dado um determinado número de id, será retornado o produto")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Produto deletado!"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
-			@ApiResponse(responseCode = "404", description = "Não foi encontrado o id informado. Verifique!")
+			@ApiResponse(responseCode = "404", description = "Não foi encontrado um cadastro de produto no id informado. Verifique!")
 			})
 	public ResponseEntity<String> deletarProduto(@PathVariable Long id) {
 		if (!produtoService.apagarProduto(id)) {
@@ -86,12 +86,12 @@ public class ProdutoController {
 	}
 
 	@PutMapping("/{id}")
-	@Operation(summary = "Retornar o Pedido pelo Id", description = "Dado um determinado número de id, será retornado o pedido")
+	@Operation(summary = "Retornar o produto pelo Id", description = "Dado um determinado número de id, será retornado o produto")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Produto alterado!"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
-			@ApiResponse(responseCode = "404", description = "Não foi encontrado o id informado. Verifique!")
+			@ApiResponse(responseCode = "404", description = "Não foi encontrado um cadastro de produto no id informado. Verifique!")
 			})
 	public ResponseEntity<ProdutoDto> alterarProduto(@PathVariable Long id, @RequestBody ProdutoDto produtoDto) {
 		Optional<ProdutoDto> produtoAlterado = produtoService.alterarProduto(id, produtoDto);

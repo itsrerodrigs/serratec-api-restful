@@ -15,7 +15,7 @@ public class Endereco {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
-	@Size(min = 8, max = 8, message = "CEP deve conter 8 caracteres")
+	@Size(min = 8, max = 8, message = "CEP deve conter apenas 8 digitos")
 	private String cep;
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
@@ -52,7 +52,6 @@ public class Endereco {
 		return id;
 	}
 	public String getCep() {
-		//Fazer ligação com a api ViaCep
 		return cep;
 	}
 	public String getRua() {
@@ -90,27 +89,4 @@ public class Endereco {
 		return "Endereco id=" + id + ", cep=" + cep + ", rua=" + rua + ", bairro=" + bairro + ", cidade=" + cidade
 				+ ", numero=" + numero + ", complemento=" + complemento + ", uf=" + uf ;
 	}
-
-	
-//	public static String ViaCep(String cep) {
-//		
-//		HttpClient client = HttpClient.newHttpClient();
-//		HttpRequest request = HttpRequest.newBuilder()
-//				.uri(URI.create("https://viacep.com.br/ws/" + cep +"/json/"))
-//				.build();
-//		HttpResponse<String> response;
-//		try {
-//			Endereco endereco = new Endereco();
-//			response = client.send(request, BodyHandlers.ofString());
-//			String body = response.body();
-//			Gson gson = new Gson();
-//			
-//			return ;
-//		} 
-//		catch (IOException | InterruptedException e) {
-//			e.printStackTrace();
-//			System.out.println("CEP não é valido!");
-//		}
-//		return null;
-//	}
 }

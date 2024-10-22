@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.serratec.serratecpub.dto.ItemPedidoDto;
-import org.serratec.serratecpub.model.ItemPedido;
 import org.serratec.serratecpub.service.ItemPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,19 +29,19 @@ public class ItemPedidoController {
 	private ItemPedidoService itemPedidoService;
 	
 	@GetMapping
-	@Operation(summary = "Retorna lista de cliente", description = "Dado um determinado id, será retornado o pedido")
+	@Operation(summary = "Retornar lista de itens pedidos", description = "Dado um determinado id, será retornado o item pedido")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Itens Pedidos localizado!"), 
+			@ApiResponse(responseCode = "200", description = "Itens pedidos localizado!"), 
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
-			@ApiResponse(responseCode = "404", description = "Error")
+			@ApiResponse(responseCode = "404", description = "Não encontramos sua lista de pedidos. Tente novamente!")
 			})
 	public List<ItemPedidoDto> obterTodosItensPedidos() {
 		return itemPedidoService.obterTodosItensPedidos();
 	}
 
 	@GetMapping("/{id}")
-	@Operation(summary = "retornar item pedido pelo id", description = "Dado um determinado id, será retronado o item pedido do cliente")
+	@Operation(summary = "Retornar item pedido pelo id", description = "Dado um determinado id, será retronado o item pedido pelo cliente")
    	@ApiResponses(value = {
    			@ApiResponse(responseCode = "200", description = "Item pedido informado!"),
    			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
@@ -59,7 +58,7 @@ public class ItemPedidoController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	@Operation(summary = "retornar item pedido pelo id", description = "Dado um determinado id, será retronado o item pedido do cliente")
+	@Operation(summary = "Retornar item pedido pelo id", description = "Dado um determinado id, será retronado o item pedido do cliente")
    	@ApiResponses(value = {
    			@ApiResponse(responseCode = "200", description = "Item pedido cadastrado!"),
    			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),

@@ -32,14 +32,14 @@ public class Cliente {
 	private String email;
 	
 
-	@Size(min=11,max=11, message="Somente numeros no CPF")
+	@Size(min=11,max=11, message="Somente numeros são permitidos para cadastro de CPF")
 	private String cpf;
 	
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage) 
-	@Size(min=11,max=11, message="Telefone deve ter entre 10 e 11 digitos")
+	@Size(min=11,max=11, message="Telefone deve conter entre 10 e 11 digitos")
 	private String telefone;
 	
-	@PastOrPresent(message = "A data de nascimento deve ser no passado ou presente")
+	@PastOrPresent(message = "A data de nascimento deve ser informada no passado ou presente no formato AAAA-MM-DD")
 	private LocalDate dataNascimento;
 
 	@OneToOne(cascade = CascadeType.ALL)

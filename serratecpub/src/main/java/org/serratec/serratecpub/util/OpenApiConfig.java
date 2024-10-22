@@ -6,9 +6,9 @@ import io.swagger.v3.oas.annotations.info.Info;
 
 @Configuration
 @OpenAPIDefinition(info = @Info(
-		title = "Api para gestão de um pub",
+		title = "API para gestão do Ecoommerce de um Pub!",
 		version = "1.0",
-		description = "Documentação da Api serratecpub"
+		description = "Documentação da API SerratecPub."
 		))
 public class OpenApiConfig {
 	

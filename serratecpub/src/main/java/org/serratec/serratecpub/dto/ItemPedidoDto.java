@@ -35,20 +35,7 @@ public record ItemPedidoDto(
             ProdutoDto.toDto(itemPedido.getProduto())
         );
     }
-	
-   
-//   public PedidoDto salvaValorTd(Pedido pedido) {
-//    	double vltd = 0.0;
-//    	if(pedido.getItemPedido()!= null) {
-//    		for(ItemPedido ip : pedido.getItemPedido()) {
-//    			ip.setPedido(pedido);
-//    			vltd += ip.getValorBruto();    		}
-//    	}
-//    	pedido.setValorTotal(vltd);
-//    	Pedido pedidoSalvo = pedidoRepository.save(pedido);
-//    	return PedidoDto.toDto(pedidoSalvo);
-//    }
-   
+    
     public double calcularValorBruto() {
     	if (this.produto != null) {
             return this.produto.toEntity().getValorUnitario() * this.quantidade;

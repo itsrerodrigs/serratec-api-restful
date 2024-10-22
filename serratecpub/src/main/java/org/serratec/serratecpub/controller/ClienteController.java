@@ -30,18 +30,18 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping
-    @Operation(summary = "Retorna lista de cliente", description = "Dado um determinado id, será retornado o pedido")
+    @Operation(summary = "Retornar lista de clientes", description = "Dado um determinado id, será retornado o cliente")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Clientes localizado!"), 
+			@ApiResponse(responseCode = "200", description = "Cliente localizado!"), 
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
-			@ApiResponse(responseCode = "404", description = "Cliente Não encontrado!")})
+			@ApiResponse(responseCode = "404", description = "Cliente não encontrado!")})
     public List<ClienteDto> listarClientes(){
         return clienteService.obterTodosClientes();
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Retorna cliente pelo id", description = "Dado um determinado id, será retornado o cliente")
+    @Operation(summary = "Retornar cliente pelo id", description = "Dado um determinado id, será retornado o cliente")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Cliente localizado!"),
             @ApiResponse(responseCode = "401", description = "Erro de autenticação"),
@@ -55,12 +55,12 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Retorna cliente pelo id", description = "Dado um determinado id, será retornado o cliente")
+    @Operation(summary = "Retornar cliente pelo id", description = "Dado um determinado id, será retornado o cliente")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Cliente cadastra!"),
             @ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
-            @ApiResponse(responseCode = "404", description = "Cliente não encontrado.")
+            @ApiResponse(responseCode = "404", description = "Cliente não encontrado")
     })
     public ClienteDto cadastrarCliente(@RequestBody ClienteDto clienteDto){
         return clienteService.salvarCliente(clienteDto);
@@ -72,13 +72,13 @@ public class ClienteController {
 			@ApiResponse(responseCode = "200", description = "Cliente excluído!"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
-			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia, é porque não existe cliente com esse id. Verifique!"),
 			})
     public ResponseEntity<String> excluirCliente(@PathVariable Long id){
         if(!clienteService.excluirCliente(id)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
         }
-        return ResponseEntity.ok("Cliente com id" + id + " excluído com sucesso!");
+        return ResponseEntity.ok("Cliente com id " + id + " excluído com sucesso!");
     }
 
     @PutMapping("/{id}")
@@ -87,7 +87,7 @@ public class ClienteController {
    			@ApiResponse(responseCode = "200", description = "Cliente alterado!"),
    			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
-   			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+   			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia, é porque não existe cliente com esse id. Verifique!"),
    			})
     public ResponseEntity<ClienteDto> alterarCliente(@PathVariable Long id,
     @RequestBody ClienteDto clienteDto){
@@ -96,8 +96,5 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(clienteAlterado.get());
-
     }
-
-    
 }

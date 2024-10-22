@@ -59,7 +59,7 @@ public class PedidoService {
         }
         pedidoEntity.setValorTotal(pedidoDto.valorTd(pedidoEntity));
         pedidoEntity = pedidoRepository.save(pedidoEntity);
-        email.enviarEmail(pedidoEntity.getCliente().getEmail(), "Pedido Realizado com sucesso", pedidoEntity.toString());
+        email.enviarEmail(pedidoEntity.getCliente().getEmail(), "Pedido realizado com sucesso", pedidoEntity.toString());
         return PedidoDto.toDto(pedidoEntity);
     }
 
@@ -71,16 +71,6 @@ public class PedidoService {
         return produtoRepository.save(produto);
     }
 
-//    public Optional<PedidoDto> alterarPedido(Long id, PedidoDto pedidoDto) {
-//        Optional<Pedido> pedidoExistente = pedidoRepository.findById(id);
-//        if (pedidoExistente.isPresent()) {
-//            Pedido pedido = pedidoDto.toEntity();
-//            pedido.setId(id);
-//            pedidoRepository.save(pedido);
-//            return Optional.of(PedidoDto.toDto(pedido));
-//        }
-//        return Optional.empty();
-//    }
 	public Optional<PedidoDto> alterarPedido(Long id, PedidoDto pedidoDto) {
 		return pedidoRepository.findById(id).map(pedidoExistente -> {
 			Pedido pedido = pedidoDto.toEntity();
