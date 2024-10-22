@@ -117,10 +117,14 @@ public class Pedido {
 	    this.valorTotalDesconto = valorTotalDesconto;
   }
   
-  @Override
+	@Override
     public String toString() {
-        return "Numero do Pedido: " + id + " | Data do Pedido: " + dataPedido + " | Data de Entrega: " + dataEntrega + " | Data de Envio: "
-                + dataEnvio + "\nStatus do Pedido: " + statusPedido + "\nValor Total: R$" + valorTotal 
-                 + "\nCliente: " + cliente.getNome() + "\nItem do Pedido: " + itemPedido.toString();
+        return "Numero do Pedido: " + id 
+                + " | Data do Pedido: " + dataPedido 
+                + "\nStatus do Pedido: " + statusPedido 
+                + "\nCliente: " + cliente.getNome() 
+                + "\nCPF: " + cliente.getCpf()
+                + "\nItem do Pedido: " + itemPedido.toString()
+                + "\n\nValor Total: R$" + valorTotal;
     }
 }
