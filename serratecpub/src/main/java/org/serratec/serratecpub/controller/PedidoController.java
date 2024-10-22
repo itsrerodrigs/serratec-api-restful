@@ -31,7 +31,6 @@ public class PedidoController {
 	private PedidoService pedidoService;
 	
 	@GetMapping
-	@ResponseStatus(HttpStatus.CREATED)
 	@Operation(summary = "Retornar lista de pedidos", description = "Dado um determinado id, será retornado o pedido")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Pedido localizado!"),
@@ -40,7 +39,7 @@ public class PedidoController {
 			@ApiResponse(responseCode = "404", description = "Nenhum pedido encontrado!")})
 	public ResponseEntity<?> obterTodosPedidos() {
 		if(pedidoService.obterTodosPedidos().isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista de pedidos vazia!");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Nenhum pedido cadastrado!");
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.obterTodosPedidos());
 	}
@@ -115,7 +114,7 @@ public class PedidoController {
 	public ResponseEntity<String> imprimirRelatorioPedido(@PathVariable Long id) {
 	  Optional<RelatorioPedidoDto> relatorioPedidoDto = pedidoService.obterRelatorioPedido(id);
 	  if (!relatorioPedidoDto.isPresent()) {
-	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido não encontrado!");
+	    return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Pedido não encontrado!");
 	  }
 	  String relatorio = relatorioPedidoDto.get().gerarRelatorio();
 	  System.out.println(relatorio);
