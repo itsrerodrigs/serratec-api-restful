@@ -7,6 +7,7 @@ import org.serratec.serratecpub.dto.PedidoDto;
 import org.serratec.serratecpub.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,13 @@ public class PedidoController {
 	private PedidoService pedidoService;
 
 	@GetMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	@Operation(summary = "Retorna lista de pedido", description = "Dado um determinado id, será retornado o pedido")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Pedido localizado!"), 
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
+			@ApiResponse(responseCode = "404", description = "Id nao encontrado!")})
 	public List<PedidoDto> obterTodosPedidos() {
 		return pedidoService.obterTodosPedidos();
 	}
@@ -36,27 +44,44 @@ public class PedidoController {
 	@GetMapping("/{id}")
 	@Operation(summary = "Retorna o pedido pelo id", description = "Dado um determinado id, será retornado o pedido")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
-			@ApiResponse(responseCode = "200", description = "Pedido localizado!") })
-	public ResponseEntity<PedidoDto> obterPedidosPorId(@PathVariable Long id) {
+			@ApiResponse(responseCode = "200", description = "Pedido localizado!"), 
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
+			@ApiResponse(responseCode = "404", description = "Id nao encontrado!")})
+	public ResponseEntity<?> obterPedidosPorId(@PathVariable Long id) {
 		Optional<PedidoDto> pedidoDto = pedidoService.obterPedidosPorId(id);
 		if (!pedidoDto.isPresent()) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro Id nao encontrado");
 		}
-		return ResponseEntity.ok(pedidoDto.get());
+		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDto);
+		//return ResponseEntity.ok(pedidoDto.get());
 	}
-
+	
 	@GetMapping("/cliente/{nome}")
-	@Operation(summary = "Retornar  Cliente pelo nome", description = "Dado um determinado nome, será retornado o cliente")
+	@Operation(summary = "Retornar cliente pelo nome", description = "Dado um determinado nome, será retornado o cliente")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Caso a lista esteja vazia é porque não tem cliente com esse nome. Verifique!"),
-			@ApiResponse(responseCode = "200", description = "Pedido localizado!") })
+			@ApiResponse(responseCode = "200", description = "Pedido localizado!"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
+			@ApiResponse(responseCode = "404", description = "Id não encontrado!") })
 	public List<PedidoDto> obterPedidosPorNomeCliente(@PathVariable String nome) {
 		return pedidoService.obterPedidosPorNomeCliente(nome);
 	}
-
+	
+//	@GetMapping("relatorio/{id}")
+//	public List<PedidoDto> relatorio(@PathVariable Long id){
+//		return pedidoService.relatorioPedido(id);
+//	}
+	
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
+	@Operation(summary = "Cadastro de pedido", description = "Criação de pedido com informações de cliente itempedido e produto")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Pedido localizado!"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
+			@ApiResponse(responseCode = "404", description = "Id não encontrado!") })
 	public PedidoDto cadastrarPedido(@RequestBody PedidoDto pedidoDto) {
 		return pedidoService.salvarPedido(pedidoDto);
 	}
@@ -66,6 +91,7 @@ public class PedidoController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
 			@ApiResponse(responseCode = "200", description = "Cliente deletado!") })
+	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<String> deletarPedido(@PathVariable Long id, PedidoDto pedidoDto) {
 		if (!pedidoService.apagarPedido(id)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido não encontrado!");
@@ -78,10 +104,11 @@ public class PedidoController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
 			@ApiResponse(responseCode = "200", description = "Peido alterado!") })
-	public ResponseEntity<PedidoDto> alterarPedido(@PathVariable Long id, @RequestBody PedidoDto pedidoDto) {
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<?> alterarPedido(@PathVariable Long id, @RequestBody PedidoDto pedidoDto) {
 		Optional<PedidoDto> pedidoAlterado = pedidoService.alterarPedido(id, pedidoDto);
 		if (!pedidoAlterado.isPresent()) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(403).body("Erro");
 		}
 		return ResponseEntity.ok(pedidoAlterado.get());
 	}

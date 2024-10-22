@@ -30,6 +30,12 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping
+    @Operation(summary = "Retorna lista de cliente", description = "Dado um determinado id, será retornado o pedido")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Clientes localizado!"), 
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
+			@ApiResponse(responseCode = "404", description = "Error")})
     public List<ClienteDto> listarClientes(){
         return clienteService.obterTodosClientes();
     }
@@ -37,8 +43,10 @@ public class ClienteController {
     @GetMapping("/{id}")
     @Operation(summary = "Retorna cliente pelo id", description = "Dado um determinado id, será retornado o cliente")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "404", description = "Cliente não encontrado."),
-            @ApiResponse(responseCode = "200", description = "Cliente localizado!")
+            @ApiResponse(responseCode = "200", description = "Cliente localizado!"),
+            @ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
+            @ApiResponse(responseCode = "404", description = "Cliente não encontrado.")
     })
     public ResponseEntity<ClienteDto> listarClientePorId(@PathVariable Long id) {
         Optional<ClienteDto> dto = clienteService.obterClientePorId(id);
@@ -47,6 +55,13 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Retorna cliente pelo id", description = "Dado um determinado id, será retornado o cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cliente cadastra!"),
+            @ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
+            @ApiResponse(responseCode = "404", description = "Cliente não encontrado.")
+    })
     public ClienteDto cadastrarCliente(@RequestBody ClienteDto clienteDto){
         return clienteService.salvarCliente(clienteDto);
     }
@@ -54,8 +69,11 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Excluir cliente pelo id", description = "Dado um determinado id, será excluído o cliente")
 	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Cliente excluído!"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
 			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
-			@ApiResponse(responseCode = "200", description = "Cliente excluído!") })
+			})
     public ResponseEntity<String> excluirCliente(@PathVariable Long id){
         if(!clienteService.excluirCliente(id)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
@@ -66,8 +84,11 @@ public class ClienteController {
     @PutMapping("/{id}")
     @Operation(summary = "Alterar cliente pelo id", description = "Dado um determinado id, será alterado o cliente")
    	@ApiResponses(value = {
+   			@ApiResponse(responseCode = "200", description = "Cliente alterado!"),
+   			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
    			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
-   			@ApiResponse(responseCode = "200", description = "Cliente alterado!") })
+   			})
     public ResponseEntity<ClienteDto> alterarCliente(@PathVariable Long id,
     @RequestBody ClienteDto clienteDto){
         Optional<ClienteDto> clienteAlterado = clienteService.alterarCliente(id, clienteDto);
