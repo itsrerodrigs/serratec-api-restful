@@ -20,9 +20,13 @@ public class ItemPedido {
 	private Long id;
 	@Positive
 	private int quantidade;
+	
+	@Positive
 	private Double precoVenda;
+	
 	@Positive
 	private int percentualDesconto;
+	
 	private double valorBruto;
 	private Double valorLiquido;
 	private Double valorDesconto;
