@@ -116,7 +116,7 @@ public class Produto {
 	@Override
 	public String toString() {
 		return "\nCodigo: " + id + "\nNome: " + nome + "\nCategoria: " + categoria + "\nDescricao: " + descricao
-				+ "\nEstoque: " +  dataCadastro + "\nValor Unitario: R$" + valorUnitario;
-				
+				+ "\nEstoque: " + qtdEstoque + "\nData Cadastro: " + dataCadastro + "\nValor Unitario: R$" + valorUnitario
+				+ "\nImagem: " + imagem;
 	}	
 }
