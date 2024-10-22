@@ -92,10 +92,10 @@ public class ItemPedidoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
    			@ApiResponse(responseCode = "404", description = "Não encontrado!")
    			})
-	public ResponseEntity<ItemPedidoDto> alterarItemPedido(@PathVariable Long id, @RequestBody ItemPedidoDto itemPedidoDto) {
+	public ResponseEntity<?> alterarItemPedido(@PathVariable Long id, @RequestBody ItemPedidoDto itemPedidoDto) {
 		Optional<ItemPedidoDto> itemPedidoAlterado = itemPedidoService.alterarItemPedido(id, itemPedidoDto);
 		if (!itemPedidoAlterado.isPresent()) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(403).body("O item desse pedido não foi alterado");
 		}
 		return ResponseEntity.ok(itemPedidoAlterado.get());
 	}

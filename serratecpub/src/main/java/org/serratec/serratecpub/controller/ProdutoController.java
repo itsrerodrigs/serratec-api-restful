@@ -49,10 +49,10 @@ public class ProdutoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
 			@ApiResponse(responseCode = "404", description = "Não foi encontrado um cadastro de produto no id informado. Verifique!")
 			})
-	public ResponseEntity<ProdutoDto> obterProdutoPorId(@PathVariable Long id) {
+	public ResponseEntity<?> obterProdutoPorId(@PathVariable Long id) {
 		Optional<ProdutoDto> produtoDto = produtoService.obterProdutosPorId(id);
 		if (!produtoDto.isPresent()) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O id do produto não foi encontrado");
 		}
 		return ResponseEntity.ok(produtoDto.get());
 	}
@@ -93,10 +93,10 @@ public class ProdutoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
 			@ApiResponse(responseCode = "404", description = "Não foi encontrado um cadastro de produto no id informado. Verifique!")
 			})
-	public ResponseEntity<ProdutoDto> alterarProduto(@PathVariable Long id, @RequestBody ProdutoDto produtoDto) {
+	public ResponseEntity<?> alterarProduto(@PathVariable Long id, @RequestBody ProdutoDto produtoDto) {
 		Optional<ProdutoDto> produtoAlterado = produtoService.alterarProduto(id, produtoDto);
 		if (!produtoAlterado.isPresent()) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(403).body("O produto não foi alterado");
 		}
 		return ResponseEntity.ok(produtoAlterado.get());
 	}

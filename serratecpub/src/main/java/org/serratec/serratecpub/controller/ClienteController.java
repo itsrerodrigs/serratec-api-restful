@@ -48,9 +48,12 @@ public class ClienteController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
             @ApiResponse(responseCode = "404", description = "Cliente não encontrado.")
     })
-    public ResponseEntity<ClienteDto> listarClientePorId(@PathVariable Long id) {
+    public ResponseEntity<?> listarClientePorId(@PathVariable Long id) {
         Optional<ClienteDto> dto = clienteService.obterClientePorId(id);
-        return dto.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        if (!dto.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro! O cliente não foi encontrado");
+		}
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
     @PostMapping
@@ -89,11 +92,11 @@ public class ClienteController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
    			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia, é porque não existe cliente com esse id. Verifique!"),
    			})
-    public ResponseEntity<ClienteDto> alterarCliente(@PathVariable Long id,
+    public ResponseEntity<?> alterarCliente(@PathVariable Long id,
     @RequestBody ClienteDto clienteDto){
         Optional<ClienteDto> clienteAlterado = clienteService.alterarCliente(id, clienteDto);
         if (!clienteAlterado.isPresent()){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(403).body("O cliente não foi alterado!");
         }
         return ResponseEntity.ok(clienteAlterado.get());
     }
