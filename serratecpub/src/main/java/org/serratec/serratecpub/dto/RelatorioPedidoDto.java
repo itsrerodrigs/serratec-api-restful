@@ -57,9 +57,9 @@ public record RelatorioPedidoDto(Long id, LocalDate dataPedido, LocalDate dataEn
 	            Double desconto = item.getValorDesconto();
 	            if (desconto != null) {
 	                totalDesconto += desconto;
+	                pedido.setValorTotalDesconto(totalDesconto);
 	            }
 	        }
-	        pedido.setValorTotalDesconto(totalDesconto);
 	        return totalDesconto;
 	    }
 	    return 0;
@@ -67,6 +67,8 @@ public record RelatorioPedidoDto(Long id, LocalDate dataPedido, LocalDate dataEn
 
 	public String gerarRelatorio() {
 		StringBuilder relatorio = new StringBuilder();
+		relatorio.append("SERRATECPUB\n\n");
+		relatorio.append("Relatório do Pedido:\n");
 		relatorio.append("ID do pedido: ").append(this.id).append("\n");
 		relatorio.append("Data do Pedido: ").append(this.dataPedido).append("\n");
 		relatorio.append("Cliente: ").append(this.cliente.getNome()).append("\n");

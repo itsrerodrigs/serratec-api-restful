@@ -3,16 +3,17 @@ package org.serratec.serratecpub.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.serratec.serratecpub.model.Cliente;
 import org.serratec.serratecpub.model.ItemPedido;
 import org.serratec.serratecpub.model.Pedido;
 import org.serratec.serratecpub.model.StatusPedido;
 
 public record PedidoDto(
-		Long id, LocalDate dataPedido, 
-		LocalDate dataEntrega, LocalDate dataEnvio,
+		Long id, 
+		LocalDate dataPedido, 
+		LocalDate dataEntrega, 
+		LocalDate dataEnvio,
 		StatusPedido statusPedido,
-		Cliente cliente, 
+		ClienteDto cliente, 
 		List<ItemPedidoDto> itemPedido,
 		Double valorTotal
 		) {
@@ -24,7 +25,7 @@ public record PedidoDto(
 		pedido.setDataEntrega(this.dataEntrega);
 		pedido.setDataEnvio(this.dataEnvio);
 		pedido.setStatusPedido(this.statusPedido);
-		pedido.setCliente(this.cliente);
+		pedido.setCliente(this.cliente.toEntity());
 		pedido.setItensPedido(this.itemPedido.stream().map(ItemPedidoDto::toEntity).toList());
 		pedido.setValorTotal(valorTd(pedido));
 
@@ -38,13 +39,13 @@ public record PedidoDto(
 				pedido.getDataEntrega(),
 				pedido.getDataEnvio(),
 				pedido.getStatusPedido(),
-				pedido.getCliente(),
+				ClienteDto.toDto(pedido.getCliente()),
 				pedido.getItemPedido().stream().map(ip -> ItemPedidoDto.toDto(ip)).toList(),
 				pedido.getValorTotal()
 				);
 	}
 	
-
+//mudar para a model
 	public double valorTd(Pedido pedido) {
 		double vltd = 0.0;
 		if(pedido.getItemPedido()!=null) {

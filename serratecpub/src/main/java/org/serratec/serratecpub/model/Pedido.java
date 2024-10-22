@@ -24,7 +24,7 @@ public class Pedido {
 	private LocalDate dataEnvio;
 	private StatusPedido statusPedido;
 	private double valorTotal;
-	private Double valorTotalDesconto;
+	private Double valorTotalDesconto = 0.0;
 	
 	@JsonBackReference
 	@ManyToOne(cascade= CascadeType.ALL)

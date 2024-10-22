@@ -80,28 +80,28 @@ public class PedidoController {
 	}
 
 	@DeleteMapping("/{id}")
-	@Operation(summary = "Deletar cliente pelo id", description = "Dado um determinado id, será deletado o cliente")
+	@Operation(summary = "Deletar pedido pelo id", description = "Dado um determinado id, será deletado o pedido do cliente")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
-			@ApiResponse(responseCode = "200", description = "Cliente deletado!") })
-	public ResponseEntity<String> deletarPedido(@PathVariable Long id, PedidoDto pedidoDto) {
-		if (!pedidoService.apagarPedido(id)) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido não encontrado!");
-		}
-		return ResponseEntity.ok("Pedido excluído com sucesso");
+	        @ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+	        @ApiResponse(responseCode = "200", description = "Cliente deletado!") })
+	public ResponseEntity<String> deletarPedido(@PathVariable Long id, @RequestBody PedidoDto pedidoDto) {
+	    if (!pedidoService.apagarPedido(id)) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido não encontrado!");
+	    }
+	    return ResponseEntity.ok("Pedido excluído com sucesso");
 	}
 
 	@PutMapping("/{id}")
 	@Operation(summary = "Alterar pedido pelo id", description = "Dado um determinado id, será alterado o pedido do cliente")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
-			@ApiResponse(responseCode = "200", description = "Peido alterado!") })
+	        @ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
+	        @ApiResponse(responseCode = "200", description = "Pedido alterado!") })
 	public ResponseEntity<PedidoDto> alterarPedido(@PathVariable Long id, @RequestBody PedidoDto pedidoDto) {
-		Optional<PedidoDto> pedidoAlterado = pedidoService.alterarPedido(id, pedidoDto);
-		if (!pedidoAlterado.isPresent()) {
-			return ResponseEntity.notFound().build();
-		}
-		return ResponseEntity.ok(pedidoAlterado.get());
+	    Optional<PedidoDto> pedidoAlterado = pedidoService.alterarPedido(id, pedidoDto);
+	    if (!pedidoAlterado.isPresent()) {
+	        return ResponseEntity.notFound().build();
+	    }
+	    return ResponseEntity.ok(pedidoAlterado.get());
 	}
 
 }
