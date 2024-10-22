@@ -30,6 +30,13 @@ public class ItemPedidoController {
 	private ItemPedidoService itemPedidoService;
 	
 	@GetMapping
+	@Operation(summary = "Retorna lista de cliente", description = "Dado um determinado id, será retornado o pedido")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Itens Pedidos localizado!"), 
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
+			@ApiResponse(responseCode = "404", description = "Error")
+			})
 	public List<ItemPedidoDto> obterTodosItensPedidos() {
 		return itemPedidoService.obterTodosItensPedidos();
 	}
@@ -37,8 +44,11 @@ public class ItemPedidoController {
 	@GetMapping("/{id}")
 	@Operation(summary = "retornar item pedido pelo id", description = "Dado um determinado id, será retronado o item pedido do cliente")
    	@ApiResponses(value = {
-   			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
-   			@ApiResponse(responseCode = "200", description = "Item pedido informado!") })
+   			@ApiResponse(responseCode = "200", description = "Item pedido informado!"),
+   			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
+   			@ApiResponse(responseCode = "404", description = "Não encontrado!")
+   			})
 	public ResponseEntity<ItemPedidoDto> obterItensPedidosPorId(@PathVariable Long id) {
 		Optional<ItemPedidoDto> itemPedidoDto = itemPedidoService.obterItensPedidosPorId(id);
 		if (!itemPedidoDto.isPresent()) {
@@ -49,6 +59,13 @@ public class ItemPedidoController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
+	@Operation(summary = "retornar item pedido pelo id", description = "Dado um determinado id, será retronado o item pedido do cliente")
+   	@ApiResponses(value = {
+   			@ApiResponse(responseCode = "200", description = "Item pedido cadastrado!"),
+   			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
+   			@ApiResponse(responseCode = "404", description = "Não encontrado!")
+   			})
 	public ItemPedidoDto cadastrarItemPedido(@RequestBody ItemPedidoDto dto) {
 		return itemPedidoService.salvarItemPedido(dto);
 	}
@@ -56,8 +73,11 @@ public class ItemPedidoController {
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Deletar item pedido pelo id", description = "Dado um determinado id, será deletado o item pedido do cliente")
    	@ApiResponses(value = {
-   			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
-   			@ApiResponse(responseCode = "200", description = "Item pedido deletado!") })
+   			@ApiResponse(responseCode = "200", description = "Item pedido deletado!"),
+   			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
+   			@ApiResponse(responseCode = "404", description = "Não encontrado!")
+   			})
 	public ResponseEntity<String> deletarItemPedido(@PathVariable Long id) {
 		if (!itemPedidoService.apagarItemPedido(id)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item pedido não encontrado!");
@@ -68,8 +88,11 @@ public class ItemPedidoController {
 	@PutMapping("/{id}")
 	@Operation(summary = "Alterar item pedido pelo id", description = "Dado um determinado id, será alterado o item pedido do cliente")
    	@ApiResponses(value = {
-   			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia é porque não tem cliente com esse id. Verifique!"),
-   			@ApiResponse(responseCode = "200", description = "Item pedido alterado!") })
+   			@ApiResponse(responseCode = "200", description = "Item pedido alterado!"),
+   			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
+   			@ApiResponse(responseCode = "404", description = "Não encontrado!")
+   			})
 	public ResponseEntity<ItemPedidoDto> alterarItemPedido(@PathVariable Long id, @RequestBody ItemPedidoDto itemPedidoDto) {
 		Optional<ItemPedidoDto> itemPedidoAlterado = itemPedidoService.alterarItemPedido(id, itemPedidoDto);
 		if (!itemPedidoAlterado.isPresent()) {

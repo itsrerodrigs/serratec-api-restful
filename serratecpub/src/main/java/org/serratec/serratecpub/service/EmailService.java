@@ -13,17 +13,15 @@ public class EmailService {
 	public String enviarEmail(String destinatario, String assunto, String mensagem) {
 		SimpleMailMessage enviaMensagem = new SimpleMailMessage();
 		
-		enviaMensagem.setFrom("Bongardmurilo@gmail.com");
+		enviaMensagem.setFrom("gustatere1@gmail.com");
 		enviaMensagem.setTo(destinatario );
 		enviaMensagem.setSubject(assunto);
 		enviaMensagem.setText(mensagem);
 		try {
 			sender.send(enviaMensagem);
-			
 			return "Email enviado com sucesso!";
 		}catch(Exception e) {
 			return "Erro ao enviar mensagem. Verifique!";
 		}
-		
 	}
 }

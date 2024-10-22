@@ -23,7 +23,7 @@ public class Endereco {
 	//@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
 	private String bairro;
 	//@NotBlank(message = TratamentoDeErro.NotBlankMessage)
-	@Size(min = 3, max = 50, message = TratamentoDeErro.SizeMessage)
+	@Size(min = 1, max = 50, message = TratamentoDeErro.SizeMessage)
 	private String cidade;
 	//@NotBlank(message = TratamentoDeErro.NotBlankMessage)
 	@Size(min = 3, max = 10, message = TratamentoDeErro.SizeMessage)

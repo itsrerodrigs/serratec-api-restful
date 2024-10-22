@@ -101,12 +101,19 @@ public class Pedido {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
+
 	public Double getValorTotalDesconto() {
 	    return valorTotalDesconto;
 	}
 
 	public void setValorTotalDesconto(Double valorTotalDesconto) {
 	    this.valorTotalDesconto = valorTotalDesconto;
-	}
+  }
+  
+  @Override
+    public String toString() {
+        return "Pedido [id=" + id + ", dataPedido=" + dataPedido + ", dataEntrega=" + dataEntrega + ", dataEnvio="
+                + dataEnvio + ", statusPedido=" + statusPedido + ", valorTotal=" + valorTotal + ", valorTotalDesconto="
+                 + ", cliente=" + cliente + ", itemPedido=" + itemPedido + "]";
+    }
 }
