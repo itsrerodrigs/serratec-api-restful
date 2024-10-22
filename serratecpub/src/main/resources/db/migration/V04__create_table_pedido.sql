@@ -3,7 +3,7 @@ CREATE TABLE pedido(
 	data_pedido DATE,
 	data_entrega DATE,
 	data_envio DATE,
-	status_pedido smallint,
+	status_pedido varchar(20),
 	valor_total DECIMAL,
 	cliente_id BIGINT,
 	

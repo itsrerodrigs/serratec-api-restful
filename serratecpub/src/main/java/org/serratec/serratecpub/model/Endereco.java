@@ -85,6 +85,11 @@ public class Endereco {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
+	@Override
+	public String toString() {
+		return "Endereco id=" + id + ", cep=" + cep + ", rua=" + rua + ", bairro=" + bairro + ", cidade=" + cidade
+				+ ", numero=" + numero + ", complemento=" + complemento + ", uf=" + uf ;
+	}
 
 	
 //	public static String ViaCep(String cep) {

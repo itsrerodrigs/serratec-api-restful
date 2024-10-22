@@ -10,13 +10,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
+import jakarta.validation.constraints.Positive;
+
 @Entity
 public class ItemPedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Positive
 	private int quantidade;
 	private Double precoVenda;
+	@Positive
 	private int percentualDesconto;
 	private double valorBruto;
 	private Double valorLiquido;
@@ -79,7 +83,7 @@ public class ItemPedido {
 	}
 
 	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
+	    this.quantidade = quantidade;
 	}
 
 	public void setPercentualDesconto(int percentualDesconto) {
@@ -103,4 +107,12 @@ public class ItemPedido {
         this.valorDesconto = this.valorBruto * (this.percentualDesconto / 100.0);
         this.valorLiquido = this.valorBruto - this.valorDesconto;
    }
+
+	@Override
+	public String toString() {
+		return "\nQuantidade: " + quantidade + "\nValor de venda: R$" + precoVenda
+				+ "\nDesconto: " + percentualDesconto + "%\nValor Bruto: R$" + valorBruto + "\nValor Liquido: R$"
+				+ valorLiquido + "\nValor de Desconto: R$" + valorDesconto + "\nProdutos: " + produto.toString();
+	}
+	
 }
