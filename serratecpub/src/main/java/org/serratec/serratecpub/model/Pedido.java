@@ -1,8 +1,11 @@
 package org.serratec.serratecpub.model;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.serratec.serratecpub.util.VerificaCpf;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -37,21 +40,13 @@ public class Pedido {
 	@ManyToOne(cascade= CascadeType.ALL)
 	private Cliente cliente;
 	
-	
 	@OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL)
 	private List<ItemPedido> itemPedido =new ArrayList<>();
-	
 	
 	public List<ItemPedido> getItemPedido() {
 		return itemPedido;
 	}
-	public void setItensPedido(List<ItemPedido> ItemPedido) {
-		ItemPedido.forEach(ip -> ip.setPedido(this));
-		this.itemPedido = ItemPedido;
-		
-	}
 	
-
 	public Long getId() {
 		return id;
 	}
@@ -102,7 +97,11 @@ public class Pedido {
 
 	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
-		
+	}
+	
+	public void setItensPedido(List<ItemPedido> ItemPedido) {
+		ItemPedido.forEach(ip -> ip.setPedido(this));
+		this.itemPedido = ItemPedido;
 	}
 
 	public void setCliente(Cliente cliente) {
@@ -115,16 +114,18 @@ public class Pedido {
 
 	public void setValorTotalDesconto(Double valorTotalDesconto) {
 	    this.valorTotalDesconto = valorTotalDesconto;
-  }
+	}
   
 	@Override
     public String toString() {
-        return "Numero do Pedido: " + id 
+		DecimalFormat df = new DecimalFormat("0.00");
+		return "SERRATECPUB - DETALHES DO PEDIDO"
+				+"\n\nNumero do Pedido: " + id
                 + " | Data do Pedido: " + dataPedido 
-                + "\nStatus do Pedido: " + statusPedido 
-                + "\nCliente: " + cliente.getNome() 
-                + "\nCPF: " + cliente.getCpf()
-                + "\nItem do Pedido: " + itemPedido.toString()
-                + "\n\nValor Total: R$" + valorTotal;
+                + "\nStatus do Pedido: " + statusPedido
+                + "\n\nCliente: " + cliente.getNome() 
+                + "\nCPF: " + VerificaCpf.formataCpf(cliente.getCpf())
+                + "\n\nItens do Pedido: " + itemPedido.toString()
+                + "\n\nValor Total do Pedido: R$" + df.format(valorTotal);
     }
 }

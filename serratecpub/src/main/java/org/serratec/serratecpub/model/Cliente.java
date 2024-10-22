@@ -3,7 +3,6 @@ package org.serratec.serratecpub.model;
 import java.time.LocalDate;
 
 import org.serratec.serratecpub.util.TratamentoDeErro;
-import org.serratec.serratecpub.util.VerificaCpf;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -31,8 +30,7 @@ public class Cliente {
 	@Size(min = 5, max = 100)
 	private String email;
 	
-
-	@Size(min=11,max=11, message="Somente numeros são permitidos para cadastro de CPF")
+	@Size(min=11,max=11, message= TratamentoDeErro.SizeMessage)
 	private String cpf;
 	
 	@NotBlank(message = TratamentoDeErro.NotBlankMessage) 
@@ -91,10 +89,7 @@ public class Cliente {
 	}
 
 	public void setCpf(String cpf) {
-		if (!VerificaCpf.isCPF(this.cpf)) {
-			throw new IllegalArgumentException("CPF inválido");
-		}
-		this.cpf = cpf;
+		this.cpf = cpf;			
 	}
 
 	public void setTelefone(String telefone) {
@@ -109,6 +104,5 @@ public class Cliente {
 	public String toString() {
 		return "Cliente id=" + id + ", nome=" + nome + ", email=" + email + ", cpf=" + cpf + ", telefone=" + telefone
 				+ ", dataNascimento=" + dataNascimento + ", endereco=" + endereco ;
-	}
-	
+	}	
 }

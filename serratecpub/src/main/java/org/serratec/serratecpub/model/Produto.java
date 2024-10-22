@@ -1,6 +1,8 @@
 package org.serratec.serratecpub.model;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+
 import org.serratec.serratecpub.util.TratamentoDeErro;
 
 import jakarta.persistence.Entity;
@@ -33,17 +35,14 @@ public class Produto {
 	@Size(max = 100, message = TratamentoDeErro.SizeMessage)
 	private String descricao;
 	
-
 	@Positive
 	private int qtdEstoque;
 	
 	@NotNull
 	private LocalDate dataCadastro;
 	
-	
 	@Positive
 	private Double valorUnitario;
-	
 	
 	public Long getId() {
 		return id;
@@ -72,7 +71,6 @@ public class Produto {
 	public Double getValorUnitario() {
 		return valorUnitario;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;
@@ -104,10 +102,11 @@ public class Produto {
 
 	@Override
 	public String toString() {
-		return "\nCodigo: " + id 
-				+ "\nNome: " + nome 
-				+ "\nCategoria: " + categoria 
-				+ "\nDescricao: " + descricao
-				+ "\nValor Unitario: R$" + valorUnitario;
-	}	
+		DecimalFormat df = new DecimalFormat("0.00");
+		return "\n\tCodigo do Produto: " + id 
+				+ "\n\tNome: " + nome
+				+ "\n\tCategoria: " + categoria 
+				+ "\n\tDescricao: " + descricao
+				+ "\n\tValor Unitario: R$" + df.format(valorUnitario);
+	}
 }

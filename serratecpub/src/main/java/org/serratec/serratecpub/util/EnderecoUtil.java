@@ -3,13 +3,12 @@ package org.serratec.serratecpub.util;
 import org.serratec.serratecpub.dto.ClienteDto;
 import org.serratec.serratecpub.model.Cliente;
 import org.serratec.serratecpub.model.Endereco;
-import org.serratec.serratecpub.model.ViaCepService;
+import org.serratec.serratecpub.service.ViaCepService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EnderecoUtil {
-
     @Autowired
     private ViaCepService viaCepService;
 
