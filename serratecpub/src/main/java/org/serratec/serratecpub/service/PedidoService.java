@@ -26,7 +26,6 @@ public class PedidoService {
     @Autowired
     private EnderecoUtil enderecoUtil;
     
-    
 	public List<PedidoDto> obterTodosPedidos() {
         return pedidoRepository.findAll().stream().map(PedidoDto::toDto).toList();
 	}

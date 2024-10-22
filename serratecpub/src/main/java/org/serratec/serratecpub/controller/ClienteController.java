@@ -35,7 +35,7 @@ public class ClienteController {
 			@ApiResponse(responseCode = "200", description = "Clientes localizado!"), 
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
-			@ApiResponse(responseCode = "404", description = "Error")})
+			@ApiResponse(responseCode = "404", description = "Cliente Não encontrado!")})
     public List<ClienteDto> listarClientes(){
         return clienteService.obterTodosClientes();
     }
