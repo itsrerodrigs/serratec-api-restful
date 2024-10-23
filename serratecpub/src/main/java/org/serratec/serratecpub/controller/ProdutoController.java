@@ -1,6 +1,5 @@
 package org.serratec.serratecpub.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.serratec.serratecpub.dto.ProdutoDto;
@@ -37,8 +36,11 @@ public class ProdutoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
 			@ApiResponse(responseCode = "404", description = "Não foi encontrado um cadastro de produto no id informado. Verifique!")
 			})
-	public List<ProdutoDto> obterTodosProdutos() {
-		return produtoService.obterTodosProdutos();
+	public ResponseEntity<?> obterTodosProdutos() {
+		if(produtoService.obterTodosProdutos().isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista de prodoutos vazia!");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(produtoService.obterTodosProdutos());
 	}
 
 	@GetMapping("/{id}")
@@ -52,11 +54,27 @@ public class ProdutoController {
 	public ResponseEntity<?> obterProdutoPorId(@PathVariable Long id) {
 		Optional<ProdutoDto> produtoDto = produtoService.obterProdutosPorId(id);
 		if (!produtoDto.isPresent()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O id do produto não foi encontrado");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O produto com id informado não foi encontrado!");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(produtoDto.get());
+	}
+	
+	@GetMapping("cadastros/{nome}")
+	@Operation(summary = "Retornar o produto pelo nome", description = "Dado um determinado nome, será retornado o produto")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Produto localizado!"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
+			@ApiResponse(responseCode = "404", description = "Não foi encontrado um cadastro de produto no id informado. Verifique!")
+			})
+	public ResponseEntity<?> obterProdutoPorNome(@PathVariable String nome) {
+		Optional<ProdutoDto> produtoDto = produtoService.obterProdutosPorNome(nome);
+		if (!produtoDto.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O produto com nome informado não foi encontrado");
 		}
 		return ResponseEntity.ok(produtoDto.get());
 	}
-
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@Operation(summary = "Retornar o produto pelo Id", description = "Dado um determinado número de id, será retornado o pedido")

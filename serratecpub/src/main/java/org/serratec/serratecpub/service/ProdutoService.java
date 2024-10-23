@@ -26,6 +26,13 @@ public class ProdutoService {
 		return Optional.of(ProdutoDto.toDto(produtoRepository.findById(id).get()));
 	}
 
+	public Optional<ProdutoDto> obterProdutosPorNome(String nome) {
+		if (produtoRepository.findByNomeIgnoreCase(nome).isEmpty()) {
+			return Optional.empty();
+		}
+		return Optional.of(ProdutoDto.toDto(produtoRepository.findByNomeIgnoreCase(nome).get()));
+	}
+
 	public ProdutoDto salvarProduto(ProdutoDto produtoDto) {
 		Produto produtoEntity = produtoRepository.save(produtoDto.toEntity());
 		return ProdutoDto.toDto(produtoEntity);

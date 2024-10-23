@@ -1,7 +1,6 @@
 package org.serratec.serratecpub.controller;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 import org.serratec.serratecpub.dto.PedidoDto;
@@ -32,15 +31,17 @@ public class PedidoController {
 	private PedidoService pedidoService;
 	
 	@GetMapping
-	@ResponseStatus(HttpStatus.CREATED)
 	@Operation(summary = "Retornar lista de pedidos", description = "Dado um determinado id, será retornado o pedido")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Pedido localizado!"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
 			@ApiResponse(responseCode = "404", description = "Nenhum pedido encontrado!")})
-	public List<PedidoDto> obterTodosPedidos() {
-		return pedidoService.obterTodosPedidos();
+	public ResponseEntity<?> obterTodosPedidos() {
+		if(pedidoService.obterTodosPedidos().isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum pedido cadastrado!");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.obterTodosPedidos());
 	}
 
 	@GetMapping("/{id}")
@@ -53,9 +54,9 @@ public class PedidoController {
 	public ResponseEntity<?> obterPedidosPorId(@PathVariable Long id) {
 		Optional<PedidoDto> pedidoDto = pedidoService.obterPedidosPorId(id);
 		if (!pedidoDto.isPresent()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro! Id do pedido não encontrado");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O Pedido com id informado não foi encontrado");
 		}
-		return ResponseEntity.status(HttpStatus.CREATED).body(pedidoDto);
+		return ResponseEntity.status(HttpStatus.OK).body(pedidoDto);
 	}
 
 	@GetMapping("/cliente/{nome}")
@@ -66,8 +67,11 @@ public class PedidoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
 			@ApiResponse(responseCode = "404", description = "Nome de cliente não encontrado!") 
 			})
-	public List<PedidoDto> obterPedidosPorNomeCliente(@PathVariable String nome) {
-		return pedidoService.obterPedidosPorNomeCliente(nome);
+	public ResponseEntity<?> obterPedidosPorNome(@PathVariable String nome) {
+		if (pedidoService.obterPedidosPorNomeCliente(nome).isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O Pedido com o nome informado não foi encontrado");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.obterPedidosPorNomeCliente(nome));
 	}
 	
 	@GetMapping("/data/{data}")
@@ -78,8 +82,11 @@ public class PedidoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
 			@ApiResponse(responseCode = "404", description = "Data não encontrada!")
 		})
-	public List<PedidoDto> obterPorData(@PathVariable LocalDate data) {
-		return pedidoService.obterPorData(data);
+	public ResponseEntity<?> obterPedidosPorData(@PathVariable LocalDate data) {
+		if (pedidoService.obterPorData(data).isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O Pedido com a data informada não foi encontrado");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.obterPorData(data));
 	}
 	
 	@GetMapping("/status/{status}")
@@ -90,8 +97,11 @@ public class PedidoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
 			@ApiResponse(responseCode = "404", description = "Status não encontrado!")
 		})
-	public List<PedidoDto> obterPorStatus(@PathVariable StatusPedido status) {
-        return pedidoService.obterPorStatus(status);
+	public ResponseEntity<?> obterPedidosPorStatus(@PathVariable StatusPedido status) {
+		if (pedidoService.obterPorStatus(status).isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O Pedido com o status informado não foi encontrado");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(pedidoService.obterPorStatus(status));
 	}
 	
 	@GetMapping("/relatorio/{id}")
@@ -104,7 +114,7 @@ public class PedidoController {
 	public ResponseEntity<String> imprimirRelatorioPedido(@PathVariable Long id) {
 	  Optional<RelatorioPedidoDto> relatorioPedidoDto = pedidoService.obterRelatorioPedido(id);
 	  if (!relatorioPedidoDto.isPresent()) {
-	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido não encontrado!");
+	    return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Pedido não encontrado!");
 	  }
 	  String relatorio = relatorioPedidoDto.get().gerarRelatorio();
 	  System.out.println(relatorio);

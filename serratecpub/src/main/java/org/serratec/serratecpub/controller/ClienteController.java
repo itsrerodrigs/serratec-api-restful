@@ -36,9 +36,12 @@ public class ClienteController {
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
 			@ApiResponse(responseCode = "404", description = "Cliente não encontrado!")})
-    public List<ClienteDto> listarClientes(){
-        return clienteService.obterTodosClientes();
-    }
+    public ResponseEntity<?> listarClientes() {
+		if(clienteService.obterTodosClientes().isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Nenhum cliente cadastrado!");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(clienteService.obterTodosClientes());
+	}
 
     @GetMapping("/{id}")
     @Operation(summary = "Retornar cliente pelo id", description = "Dado um determinado id, será retornado o cliente")
@@ -53,7 +56,7 @@ public class ClienteController {
         if (!dto.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro! O cliente não foi encontrado");
 		}
-        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
     @PostMapping
