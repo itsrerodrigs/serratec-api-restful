@@ -9,10 +9,10 @@ import org.serratec.serratecpub.model.StatusPedido;
 
 public record PedidoDto(
 		Long id, 
-		LocalDate dataPedido, 
-		LocalDate dataEntrega, 
-		LocalDate dataEnvio,
 		StatusPedido statusPedido,
+		LocalDate dataPedido, 
+		LocalDate dataEnvio,
+		LocalDate dataEntrega, 
 		ClienteDto cliente, 
 		List<ItemPedidoDto> itemPedido,
 		Double valorTotal
@@ -21,10 +21,10 @@ public record PedidoDto(
 	public Pedido toEntity() {
 		Pedido pedido = new Pedido();
 		pedido.setId(this.id);
-		pedido.setDataPedido(this.dataPedido);
-		pedido.setDataEntrega(this.dataEntrega);
-		pedido.setDataEnvio(this.dataEnvio);
 		pedido.setStatusPedido(this.statusPedido);
+		pedido.setDataPedido(this.dataPedido);
+		pedido.setDataEnvio(this.dataEnvio);
+		pedido.setDataEntrega(this.dataEntrega);
 		pedido.setCliente(this.cliente.toEntity());
 		pedido.setItensPedido(this.itemPedido.stream().map(ItemPedidoDto::toEntity).toList());
 		pedido.setValorTotal(valorTd(pedido));
@@ -35,17 +35,16 @@ public record PedidoDto(
 	public static PedidoDto toDto(Pedido pedido) {
 		return new PedidoDto(
 				pedido.getId(),
-				pedido.getDataPedido(),
-				pedido.getDataEntrega(),
-				pedido.getDataEnvio(),
 				pedido.getStatusPedido(),
+				pedido.getDataPedido(),
+				pedido.getDataEnvio(),
+				pedido.getDataEntrega(),
 				ClienteDto.toDto(pedido.getCliente()),
 				pedido.getItemPedido().stream().map(ip -> ItemPedidoDto.toDto(ip)).toList(),
 				pedido.getValorTotal()
 				);
 	}
 	
-//mudar para a model
 	public double valorTd(Pedido pedido) {
 		double vltd = 0.0;
 		if(pedido.getItemPedido()!=null) {

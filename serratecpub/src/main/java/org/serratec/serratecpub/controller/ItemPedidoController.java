@@ -37,7 +37,7 @@ public class ItemPedidoController {
 			})
 	public ResponseEntity<?> obterTodosItensPedidos() {
 		if(itemPedidoService.obterTodosItensPedidos().isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Lista de itens pedido vazia!");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista de itens pedido vazia!");
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(itemPedidoService.obterTodosItensPedidos());
 	}

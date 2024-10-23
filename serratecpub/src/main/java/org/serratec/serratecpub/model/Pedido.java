@@ -18,7 +18,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -28,7 +27,6 @@ public class Pedido {
 	private Long id;
 	private LocalDate dataPedido;
 	private LocalDate dataEntrega;
-	@Future
 	private LocalDate dataEnvio;
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -88,11 +86,32 @@ public class Pedido {
 	}
 
 	public void setDataEnvio(LocalDate dataEnvio) {
-		this.dataEnvio = dataEnvio;
+		this.dataEnvio = LocalDate.now().plusDays(2);
 	}
 
 	public void setStatusPedido(StatusPedido statusPedido) {
 		this.statusPedido = statusPedido;
+		
+		if (statusPedido == StatusPedido.ENVIADO) {
+            this.dataPedido = LocalDate.now();
+            this.dataEnvio = LocalDate.now().plusDays(2);
+            this.dataEntrega = null;
+		}
+		else if(statusPedido == StatusPedido.EM_PRODUCAO) {
+			this.dataPedido = LocalDate.now();
+			this.dataEnvio = null;
+			this.dataEntrega = null;
+		}
+		else if (statusPedido == StatusPedido.SAIU_DA_TRANSPORTADORA) {
+            this.dataPedido = LocalDate.now();
+            this.dataEnvio = LocalDate.now();
+            this.dataEntrega = null;
+		}
+		else if (statusPedido == StatusPedido.ENTREGUE) {
+            this.dataPedido = LocalDate.now();
+            this.dataEnvio = LocalDate.now().plusDays(2);
+            this.dataEntrega = LocalDate.now().plusDays(15);
+        }
 	}
 
 	public void setValorTotal(double valorTotal) {

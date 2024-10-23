@@ -37,7 +37,7 @@ public class ClienteController {
 			@ApiResponse(responseCode = "404", description = "Cliente não encontrado!")})
     public ResponseEntity<?> listarClientes() {
 		if(clienteService.obterTodosClientes().isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Nenhum cliente cadastrado!");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum cliente cadastrado!");
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(clienteService.obterTodosClientes());
 	}
