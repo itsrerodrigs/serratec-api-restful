@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/produtos")
@@ -84,7 +85,7 @@ public class ProdutoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
 			@ApiResponse(responseCode = "404", description = "Não foi encontrado um cadastro de produto no id informado. Verifique!")
 			})
-	public ProdutoDto cadastrarProduto(@RequestBody ProdutoDto produtoDto) {
+	public ProdutoDto cadastrarProduto(@RequestBody @Valid ProdutoDto produtoDto) {
 		return produtoService.salvarProduto(produtoDto);
 	}
 
@@ -111,7 +112,7 @@ public class ProdutoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
 			@ApiResponse(responseCode = "404", description = "Não foi encontrado um cadastro de produto no id informado. Verifique!")
 			})
-	public ResponseEntity<?> alterarProduto(@PathVariable Long id, @RequestBody ProdutoDto produtoDto) {
+	public ResponseEntity<?> alterarProduto(@PathVariable Long id, @RequestBody @Valid ProdutoDto produtoDto) {
 		Optional<ProdutoDto> produtoAlterado = produtoService.alterarProduto(id, produtoDto);
 		if (!produtoAlterado.isPresent()) {
 			return ResponseEntity.status(403).body("O produto não foi alterado");

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/itenspedidos")
@@ -67,7 +68,7 @@ public class ItemPedidoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
    			@ApiResponse(responseCode = "404", description = "Não encontrado!")
    			})
-	public ItemPedidoDto cadastrarItemPedido(@RequestBody ItemPedidoDto dto) {
+	public ItemPedidoDto cadastrarItemPedido(@RequestBody @Valid ItemPedidoDto dto) {
 		return itemPedidoService.salvarItemPedido(dto);
 	}
 
@@ -94,7 +95,7 @@ public class ItemPedidoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
    			@ApiResponse(responseCode = "404", description = "Não encontrado!")
    			})
-	public ResponseEntity<?> alterarItemPedido(@PathVariable Long id, @RequestBody ItemPedidoDto itemPedidoDto) {
+	public ResponseEntity<?> alterarItemPedido(@PathVariable Long id, @RequestBody @Valid ItemPedidoDto itemPedidoDto) {
 		Optional<ItemPedidoDto> itemPedidoAlterado = itemPedidoService.alterarItemPedido(id, itemPedidoDto);
 		if (!itemPedidoAlterado.isPresent()) {
 			return ResponseEntity.status(403).body("O item desse pedido não foi alterado");

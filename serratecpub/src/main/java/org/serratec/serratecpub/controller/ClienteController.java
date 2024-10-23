@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/clientes")
@@ -67,7 +68,7 @@ public class ClienteController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
             @ApiResponse(responseCode = "404", description = "Cliente não encontrado")
     })
-    public ClienteDto cadastrarCliente(@RequestBody ClienteDto clienteDto){
+    public ClienteDto cadastrarCliente(@RequestBody @Valid ClienteDto clienteDto){
         return clienteService.salvarCliente(clienteDto);
     }
 
@@ -94,8 +95,7 @@ public class ClienteController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"),
    			@ApiResponse(responseCode = "404", description = "Caso a lista esteja vazia, é porque não existe cliente com esse id. Verifique!"),
    			})
-    public ResponseEntity<?> alterarCliente(@PathVariable Long id,
-    @RequestBody ClienteDto clienteDto){
+    public ResponseEntity<?> alterarCliente(@PathVariable Long id, @RequestBody @Valid ClienteDto clienteDto){
         Optional<ClienteDto> clienteAlterado = clienteService.alterarCliente(id, clienteDto);
         if (!clienteAlterado.isPresent()){
             return ResponseEntity.status(403).body("O cliente não foi alterado!");

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -129,7 +130,7 @@ public class PedidoController {
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
 			@ApiResponse(responseCode = "404", description = "Id não encontrado!") })
-	public PedidoDto cadastrarPedido(@RequestBody PedidoDto pedidoDto) {
+	public PedidoDto cadastrarPedido(@RequestBody @Valid PedidoDto pedidoDto) {
 		return pedidoService.salvarPedido(pedidoDto);
 	}
 
@@ -157,7 +158,7 @@ public class PedidoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso!"), 
 			@ApiResponse(responseCode = "404", description = "Pedido não encontrado!")})
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> alterarPedido(@PathVariable Long id, @RequestBody PedidoDto pedidoDto) {
+	public ResponseEntity<?> alterarPedido(@PathVariable Long id, @RequestBody @Valid PedidoDto pedidoDto) {
 		Optional<PedidoDto> pedidoAlterado = pedidoService.alterarPedido(id, pedidoDto);
 		if (!pedidoAlterado.isPresent()) {
 			return ResponseEntity.status(403).body("Erro");
