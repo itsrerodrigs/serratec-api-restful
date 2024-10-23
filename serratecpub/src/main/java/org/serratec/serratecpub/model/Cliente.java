@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import org.hibernate.validator.constraints.br.CPF;
 import org.serratec.serratecpub.util.TratamentoDeErro;
 
-import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

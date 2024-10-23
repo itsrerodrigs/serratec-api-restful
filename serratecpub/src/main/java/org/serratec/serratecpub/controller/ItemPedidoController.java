@@ -1,10 +1,8 @@
 package org.serratec.serratecpub.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.serratec.serratecpub.dto.ItemPedidoDto;
-import org.serratec.serratecpub.model.ItemPedido;
 import org.serratec.serratecpub.service.ItemPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
